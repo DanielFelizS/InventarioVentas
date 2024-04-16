@@ -13,5 +13,7 @@ namespace Ventas.Models
         public string Telefono {get; set;}
         public string Email {get; set;}
         public string DNI {get; set;}
+        public virtual ICollection<Venta> Ventas {get; set;}
+
     }
 }

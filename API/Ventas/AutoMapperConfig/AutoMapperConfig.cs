@@ -8,6 +8,16 @@ namespace Ventas.AutoMapperConfig
     {
         public AutoMapperConfigProfile()
         {
+            // Empleados
+            CreateMap<EmpleadosDTO, Empleados>();
+            CreateMap<Empleados, EmpleadosDTO>();
+            // Clientes
+            CreateMap<ClientesDTO, Clientes>();
+            CreateMap<Clientes, ClientesDTO>();
+            // Productos
+            CreateMap<ProductosDTO, Productos>();
+            CreateMap<Productos, ProductosDTO>();
+            // Ventas
             CreateMap<Venta, VentaDTO>();
             CreateMap<VentaCreateDTO, Venta>();
         }

@@ -16,8 +16,12 @@ namespace Ventas.Models
         public int ClienteId {get; set;}
         public Clientes clientes {get; set;}
         public int Cantidad {get; set;}
-        public DateTime Fecha_venta {get; set;}
-        public int Total {get; set;}
-        public int ITBIS {get; set;}
+        public DateTime Fecha_venta {get; set;} = DateTime.Now;
+        public double Total {
+            get{return Cantidad * productos.Precio;}
+        }
+        public double ITBIS {
+            get {return Total * 0.18;}
+        }
     }
 }

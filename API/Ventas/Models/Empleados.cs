@@ -16,8 +16,10 @@ namespace Ventas.Models
         public string Email {get; set;}
         public string DNI {get; set;}
         public int Sueldo {get; set;}
-        public string Crago {get; set;}
+        public string Cargo {get; set;}
         public DateTime FechaNacimiento {get; set;}
         public DateTime FechaContratacion {get; set;}
+
+        public virtual ICollection<Venta> Ventas {get; set;}
     }
 }

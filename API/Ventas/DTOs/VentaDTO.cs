@@ -11,7 +11,7 @@ namespace Ventas.DTOs
         [NotMapped]
         public string nombre_producto {get; set;}
         [NotMapped]
-        public int precio_producto {get; set;}
+        public double precio_producto {get; set;}
         [JsonIgnore]
         public int EmpleadoId {get; set;}
         [NotMapped]
@@ -21,7 +21,7 @@ namespace Ventas.DTOs
         [NotMapped]
         public string nombre_cliente {get; set;}
         public int Cantidad {get; set;}
-        public int Total {get; set;}
-        public int ITBIS {get; set;}
+        public double Total {get; set;}
+        public double ITBIS {get; set;}
     }
 }

@@ -7,6 +7,11 @@ namespace Ventas.DTOs
 {
     public class VentaCreateDTO
     {
-        
+        public int ProductoId {get; set;}
+        public int EmpleadoId {get; set;}
+        public int ClienteId {get; set;}
+        public int Cantidad {get; set;}
+        public int Total {get; set;}
+        public int ITBIS {get; set;}
     }
 }
