@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj": {}
+    "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\api\\ventas\\Ventas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj": {
+    "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\api\\ventas\\Ventas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
+        "projectUniqueName": "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\api\\ventas\\Ventas.csproj",
         "projectName": "Ventas",
-        "projectPath": "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
+        "projectPath": "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\api\\ventas\\Ventas.csproj",
         "packagesPath": "C:\\Users\\A19A05048\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\API\\Ventas\\obj\\",
+        "outputPath": "C:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\api\\ventas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\A19A05048\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,13 +38,97 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.AspNetCore.OpenApi": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.102.2, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.4, )"
             },
+            "Microsoft.DotNet.Watcher.Tools": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[7.2.0, )"
+            },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[1.6.11, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "QuestPDF": {
+              "target": "Package",
+              "version": "[2022.12.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
+            },
+            "Swashbuckle.AspNetCore.Filters": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.2.0, )"
+            },
+            "System.Security.Claims": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [

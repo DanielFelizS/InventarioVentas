@@ -7,7 +7,7 @@ namespace Ventas.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID {get; set;}
+        public int Id {get; set;}
         public string Producto {get; set;}
         public string Descripcion {get; set;}
         public int Precio {get; set;}

@@ -1,14 +1,11 @@
-using Inventario.Data;
-using Inventario.Authorization;
-using Inventario.Services;
-using Inventario.Interface;
+using Ventas.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using Inventario.AutoMapperConfig;
+using Ventas.AutoMapperConfig;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,59 +23,55 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+// builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+// );
 
 builder.Services.AddAutoMapper(typeof(AutoMapperConfigProfile));
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 // Add Identity
-builder.Services
-    .AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+// builder.Services
+//     .AddIdentity<ApplicationUser, IdentityRole>()
+//     .AddEntityFrameworkStores<ApplicationDbContext>()
+//     .AddDefaultTokenProviders();
 
 // Config Identity
 
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    options.Password.RequiredLength = 8;
-    options.Password.RequireDigit = false;
-    options.Password.RequireLowercase = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequireNonAlphanumeric = false;
-    options.SignIn.RequireConfirmedAccount = false;
-    options.SignIn.RequireConfirmedEmail = false;
-    options.SignIn.RequireConfirmedPhoneNumber = false;
-});
+// builder.Services.Configure<IdentityOptions>(options =>
+// {
+//     options.Password.RequiredLength = 8;
+//     options.Password.RequireDigit = false;
+//     options.Password.RequireLowercase = false;
+//     options.Password.RequireUppercase = false;
+//     options.Password.RequireNonAlphanumeric = false;
+//     options.SignIn.RequireConfirmedAccount = false;
+//     options.SignIn.RequireConfirmedEmail = false;
+//     options.SignIn.RequireConfirmedPhoneNumber = false;
+// });
 
 // Autenticacion
-builder.Services
-    .AddAuthentication(options =>
-    {
-        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        options.SaveToken = true;
-        options.RequireHttpsMetadata= false;
-        options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidIssuer = builder.Configuration["JwtSettings:ValidIssuer"],
-            ValidAudience = builder.Configuration["JwtSettings:ValidAudience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
-        };
-    });
-
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<AuditoriaService>();
+// builder.Services
+//     .AddAuthentication(options =>
+//     {
+//         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//     })
+//     .AddJwtBearer(options =>
+//     {
+//         options.SaveToken = true;
+//         options.RequireHttpsMetadata= false;
+//         options.TokenValidationParameters = new TokenValidationParameters()
+//         {
+//             ValidateIssuer = true,
+//             ValidateAudience = true,
+//             ValidIssuer = builder.Configuration["JwtSettings:ValidIssuer"],
+//             ValidAudience = builder.Configuration["JwtSettings:ValidAudience"],
+//             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+//         };
+//     });
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -120,8 +113,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddScoped<IAuthService, AuthService>(); 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -132,7 +123,7 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         options.RoutePrefix = string.Empty;
-        options.DocumentTitle = "API INVI";
+        options.DocumentTitle = "Inventario Ventas";
     }
     );
 }

@@ -1,32 +1,63 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using Ventas.Models;
+using Ventas.DTOs;
+using Ventas.Data;
+using AutoMapper;
+using QuestPDF.Fluent;
+using OfficeOpenXml;
+using ClosedXML.Excel;
 
 namespace Ventas.Controllers
 {
-    [Route("[controller]")]
+    [Route("empleado")]
     public class EmpleadoController : Controller
     {
         private readonly ILogger<EmpleadoController> _logger;
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _host;
 
-        public EmpleadoController(ILogger<EmpleadoController> logger)
+        public EmpleadoController(ILogger<EmpleadoController> logger, DataContext context, IMapper mapper,  IWebHostEnvironment host)
         {
             _logger = logger;
+            _context = context;
+            _mapper = mapper;
+            _host = host;
         }
-
-        public IActionResult Index()
+        [HttpGet(Name = "ObtenerEmpleados")]
+        public async Task<ActionResult<PaginatedList<EmpleadosDTO>>> ObtenerEmpleados(int id, int pageNumber = 1, int pageSize = 6)
         {
-            return View();
-        }
+            var datos = await _context.empleados.FindAsync(id);
+            var Empleados = await _context.empleados.ToListAsync();
+            var totalCount = Empleados.Count;
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            // var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
+            var PaginacionEmpleados = Empleados.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            var DepartamentosDTO = _mapper.Map<List<EmpleadosDTO>>(PaginacionEmpleados);
+
+            var paginatedList = new PaginatedList<EmpleadosDTO>
+            {
+                Items = DepartamentosDTO,
+                TotalCount = totalCount,
+                PageIndex = pageNumber,
+                PageSize = pageSize,
+                TotalPages = totalPages
+            };
+
+            // Agrega el encabezado 'X-Total-Count' a la respuesta
+            Response.Headers["X-Total-Count"] = totalCount.ToString();
+            // Exponer el encabezado 'X-Total-Count'
+            Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
+            
+            return paginatedList;
         }
     }
 }
