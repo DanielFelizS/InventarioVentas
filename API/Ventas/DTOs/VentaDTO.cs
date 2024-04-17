@@ -21,6 +21,7 @@ namespace Ventas.DTOs
         [NotMapped]
         public string nombre_cliente {get; set;}
         public int Cantidad {get; set;}
+        public DateTime Fecha_venta {get; set;} = DateTime.Now;
         public double Total {get; set;}
         public double ITBIS {get; set;}
     }

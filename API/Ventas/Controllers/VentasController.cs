@@ -43,8 +43,9 @@ namespace Ventas.Controllers
                     nombre_empleado = empleados.Nombre,
                     nombre_cliente = clientes.Nombre,
                     Cantidad = ventas.Cantidad,
+                    Fecha_venta = ventas.Fecha_venta,
                     Total = ventas.Total,
-                    ITBIS = ventas.ITBIS,
+                    ITBIS = ventas.ITBIS
                 })
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -60,6 +61,68 @@ namespace Ventas.Controllers
                 PageSize = pageSize,
                 TotalPages = totalPages,
                 Items = paginatedVentas
+            };
+
+            // Agrega el encabezado 'X-Total-Count' a la respuesta
+            Response.Headers["X-Total-Count"] = totalCount.ToString();
+            // Exponer el encabezado 'X-Total-Count'
+            Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
+
+            return paginatedList;
+        }
+        [HttpGet("buscar")]
+        public async Task<ActionResult<PaginatedList<VentaDTO>>> Buscar(int id, int pageNumber = 1, int pageSize = 6, string buscar = null)
+        {
+            var consulta = _context.ventas.AsQueryable();
+
+            if (!string.IsNullOrEmpty(buscar))
+            {
+                consulta = consulta.Where(d => d.productos.Producto != null && d.productos.Producto.Contains(buscar) ||
+                d.productos.Precio.ToString() != null && d.productos.Precio.ToString().Contains(buscar) ||
+                d.empleados.Nombre != null && d.empleados.Nombre.Contains(buscar) ||
+                d.clientes.Nombre != null && d.clientes.Nombre.Contains(buscar) ||
+                d.Fecha_venta.ToString() != null && d.Fecha_venta.ToString().Contains(buscar));
+            }
+            
+            // Obtener las ventas paginadas
+            var paginacionVentas = await consulta
+                .Select(ventas => new VentaDTO
+                {
+                    Id = ventas.Id,
+                    nombre_producto = ventas.productos.Producto,
+                    precio_producto = ventas.productos.Precio,
+                    nombre_empleado = ventas.empleados.Nombre,
+                    nombre_cliente = ventas.clientes.Nombre,
+                    Cantidad = ventas.Cantidad,
+                    Fecha_venta = ventas.Fecha_venta,
+                    Total = ventas.Total,
+                    ITBIS = ventas.ITBIS
+                })
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var totalCount = await consulta.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            var ventasDto = paginacionVentas.Select(d =>
+            {
+                var ventaDto = _mapper.Map<VentaDTO>(d);
+                ventaDto.nombre_empleado = d.nombre_empleado;
+                ventaDto.nombre_cliente = d.nombre_cliente;
+                ventaDto.nombre_producto = d.nombre_producto;
+                ventaDto.precio_producto = d.precio_producto;
+
+                return ventaDto;
+            }).ToList();
+
+            var paginatedList = new PaginatedList<VentaDTO>
+            {
+                Items = ventasDto,
+                TotalCount = totalCount,
+                PageIndex = pageNumber,
+                PageSize = pageSize,
+                TotalPages = totalPages
             };
 
             // Agrega el encabezado 'X-Total-Count' a la respuesta

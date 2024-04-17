@@ -59,5 +59,45 @@ namespace Ventas.Controllers
             
             return paginatedList;
         }
+        [HttpGet("buscar")]
+        public async Task<ActionResult<PaginatedList<ProductosDTO>>> Buscar(int id, int pageNumber = 1, int pageSize = 6, string buscar = null)
+        {
+            var consulta = _context.productos.AsQueryable();
+
+            if (!string.IsNullOrEmpty(buscar))
+            {
+                consulta = consulta.Where(d => d.Producto != null && d.Producto.Contains(buscar) ||
+                d.Descripcion != null && d.Descripcion.Contains(buscar) ||
+                d.Precio.ToString() != null && d.Precio.ToString().Contains(buscar) ||
+                d.Disponible.ToString() != null && d.Disponible.ToString().Contains(buscar));
+            }
+
+            var totalCount = await consulta.CountAsync();
+
+            // Obtener los dispositivos paginados
+            var paginacionProductos = await consulta
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var productosDto = _mapper.Map<List<ProductosDTO>>(paginacionProductos);
+
+            var paginatedList = new PaginatedList<ProductosDTO>
+            {
+                Items = productosDto,
+                TotalCount = totalCount,
+                PageIndex = pageNumber,
+                PageSize = pageSize,
+                TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
+            };
+
+            // Agregar el encabezado 'X-Total-Count' a la respuesta
+            Response.Headers["X-Total-Count"] = paginatedList.TotalCount.ToString();
+            // Exponer el encabezado 'X-Total-Count'
+            Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
+
+            // Devolver la lista paginada de dispositivos
+            return paginatedList;
+        }
     }
 }

@@ -41,11 +41,11 @@ namespace Ventas.Controllers
             var PaginacionCliente = Clientes.Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
-            var DepartamentosDTO = _mapper.Map<List<ClientesDTO>>(PaginacionCliente);
+            var ClientesDto = _mapper.Map<List<ClientesDTO>>(PaginacionCliente);
 
             var paginatedList = new PaginatedList<ClientesDTO>
             {
-                Items = DepartamentosDTO,
+                Items = ClientesDto,
                 TotalCount = totalCount,
                 PageIndex = pageNumber,
                 PageSize = pageSize,
@@ -57,6 +57,48 @@ namespace Ventas.Controllers
             // Exponer el encabezado 'X-Total-Count'
             Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
             
+            return paginatedList;
+        }
+        [HttpGet("buscar")]
+        public async Task<ActionResult<PaginatedList<ClientesDTO>>> Buscar(int id, int pageNumber = 1, int pageSize = 6, string buscar = null)
+        {
+            var consulta = _context.clientes.AsQueryable();
+
+            if (!string.IsNullOrEmpty(buscar))
+            {
+                consulta = consulta.Where(d => d.Nombre != null && d.Nombre.Contains(buscar) ||
+                d.Apellido != null && d.Apellido.Contains(buscar) ||
+                d.Telefono != null && d.Telefono.Contains(buscar) ||
+                d.Email != null && d.Email.Contains(buscar) ||
+                d.DNI != null && d.DNI.Contains(buscar)
+                );
+            }
+
+            var totalCount = await consulta.CountAsync();
+
+            // Obtener los dispositivos paginados
+            var PaginacionCliente = await consulta
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var clientesDto = _mapper.Map<List<ClientesDTO>>(PaginacionCliente);
+
+            var paginatedList = new PaginatedList<ClientesDTO>
+            {
+                Items = clientesDto,
+                TotalCount = totalCount,
+                PageIndex = pageNumber,
+                PageSize = pageSize,
+                TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
+            };
+
+            // Agregar el encabezado 'X-Total-Count' a la respuesta
+            Response.Headers["X-Total-Count"] = paginatedList.TotalCount.ToString();
+            // Exponer el encabezado 'X-Total-Count'
+            Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
+
+            // Devolver la lista paginada de dispositivos
             return paginatedList;
         }
     }
