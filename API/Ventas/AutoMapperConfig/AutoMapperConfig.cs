@@ -19,7 +19,9 @@ namespace Ventas.AutoMapperConfig
             CreateMap<Productos, ProductosDTO>();
             // Ventas
             CreateMap<Venta, VentaDTO>();
+            CreateMap<VentaDTO, Venta>();
             CreateMap<VentaCreateDTO, Venta>();
+            CreateMap<VentaCreateDTO, VentaDTO>();
         }
     }
 }

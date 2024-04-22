@@ -101,5 +101,56 @@ namespace Ventas.Controllers
             // Devolver la lista paginada de dispositivos
             return paginatedList;
         }
+        [HttpPost]
+        public async Task<IActionResult> saveInformation([FromBody] ClientesDTO cliente)
+        {
+            if (ModelState.IsValid)
+            {
+                Clientes AddCliente = _mapper.Map<Clientes>(cliente);
+                _context.clientes.AddAsync(AddCliente);
+                await _context.SaveChangesAsync();
+
+                // Devolver una respuesta CreatedAtRoute con el dispositivo creado
+                return CreatedAtRoute("VerClientes", new { id = AddCliente.Id }, AddCliente);
+            }
+
+            return BadRequest(ModelState);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] ClientesDTO cliente)
+        {
+            if (id != cliente?.Id)
+            {
+                return BadRequest("No se encontró el ID");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+                Clientes newCliente = _mapper.Map<Clientes>(cliente);
+                _context.Update(newCliente);
+                await _context.SaveChangesAsync();
+                return Ok("Se actualizó correctamente");
+        }
+        [HttpDelete("{id}")] 
+        public async Task<ActionResult<Clientes>> Delete(int id)
+        {
+            try{
+                var cliente = await _context.clientes.FindAsync(id);
+                if (cliente == null)
+                {
+                    return NotFound();
+                }
+
+                _context.clientes.Remove(cliente);
+                await _context.SaveChangesAsync();
+
+                return cliente;
+            } catch (Exception ex) {
+                return StatusCode(500, $"Ocurrió un error mientras se actualizaban los datos: {ex.Message}");
+            }
+        }
     }
 }

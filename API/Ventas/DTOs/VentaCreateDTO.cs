@@ -11,7 +11,5 @@ namespace Ventas.DTOs
         public int EmpleadoId {get; set;}
         public int ClienteId {get; set;}
         public int Cantidad {get; set;}
-        public int Total {get; set;}
-        public int ITBIS {get; set;}
     }
 }

@@ -104,5 +104,56 @@ namespace Ventas.Controllers
             // Devolver la lista paginada de dispositivos
             return paginatedList;
         }
+        [HttpPost]
+        public async Task<IActionResult> saveInformation([FromBody] EmpleadosDTO empleado)
+        {
+            if (ModelState.IsValid)
+            {
+                Empleados AddEmpleado = _mapper.Map<Empleados>(empleado);
+                _context.empleados.AddAsync(AddEmpleado);
+                await _context.SaveChangesAsync();
+
+                // Devolver una respuesta CreatedAtRoute con el dispositivo creado
+                return CreatedAtRoute("ObtenerEmpleados", new { id = AddEmpleado.Id }, AddEmpleado);
+            }
+
+            return BadRequest(ModelState);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] EmpleadosDTO empleado)
+        {
+            if (id != empleado?.Id)
+            {
+                return BadRequest("No se encontró el ID");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+                Empleados newEmpleado = _mapper.Map<Empleados>(empleado);
+                _context.Update(newEmpleado);
+                await _context.SaveChangesAsync();
+                return Ok("Se actualizó correctamente");
+        }
+        [HttpDelete("{id}")] 
+        public async Task<ActionResult<Empleados>> Delete(int id)
+        {
+            try{
+                var empleado = await _context.empleados.FindAsync(id);
+                if (empleado == null)
+                {
+                    return NotFound();
+                }
+
+                _context.empleados.Remove(empleado);
+                await _context.SaveChangesAsync();
+
+                return empleado;
+            } catch (Exception ex) {
+                return StatusCode(500, $"Ocurrió un error mientras se actualizaban los datos: {ex.Message}");
+            }
+        }
     }
 }

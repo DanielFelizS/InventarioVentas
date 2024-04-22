@@ -77,7 +77,9 @@ namespace Ventas.Migrations
                     EmpleadoId = table.Column<int>(type: "int", nullable: false),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
-                    Fecha_venta = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Fecha_venta = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<double>(type: "float", nullable: false),
+                    ITBIS = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {

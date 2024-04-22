@@ -83,7 +83,7 @@ namespace Ventas.Controllers
                 d.clientes.Nombre != null && d.clientes.Nombre.Contains(buscar) ||
                 d.Fecha_venta.ToString() != null && d.Fecha_venta.ToString().Contains(buscar));
             }
-            
+
             // Obtener las ventas paginadas
             var paginacionVentas = await consulta
                 .Select(ventas => new VentaDTO
@@ -131,6 +131,86 @@ namespace Ventas.Controllers
             Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
 
             return paginatedList;
+        }
+        [HttpPost]
+        public async Task<IActionResult> saveInformation([FromBody] VentaCreateDTO venta)
+        {
+            if (ModelState.IsValid)
+            {
+                // Mapear el DTO a una entidad Venta
+                Venta AddVenta = _mapper.Map<Venta>(venta);
+
+                // Calcular el total y el ITBIS
+                double Precio = await _context.productos
+                    .Where(p => p.Id == venta.ProductoId)
+                    .Select(p => p.Precio)
+                    .FirstOrDefaultAsync();
+
+                double total = venta.Cantidad * Precio;
+                double itbis = total * 0.18;
+
+                // Asignar el total e ITBIS a la entidad Venta
+                AddVenta.Total = total;
+                AddVenta.ITBIS = itbis;
+
+                // Agregar la venta a la base de datos
+                _context.ventas.Add(AddVenta);
+                await _context.SaveChangesAsync();
+
+                // Crear un DTO VentaDTO para devolver como respuesta
+                VentaDTO ventaDTO = new VentaDTO
+                {
+                    Id = AddVenta.Id,
+                    ProductoId = AddVenta.ProductoId,
+                    EmpleadoId = AddVenta.EmpleadoId,
+                    ClienteId = AddVenta.ClienteId,
+                    Cantidad = AddVenta.Cantidad,
+                    Fecha_venta = AddVenta.Fecha_venta,
+                    Total = total,
+                    ITBIS = itbis
+                };
+
+                // Devolver una respuesta con el DTO VentaDTO
+                return Ok(ventaDTO);
+            }
+
+            return BadRequest(ModelState);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] VentaDTO venta)
+        {
+            if (id != venta?.Id)
+            {
+                return BadRequest("No se encontró el ID");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+                Venta newVenta = _mapper.Map<Venta>(venta);
+                _context.Update(newVenta);
+                await _context.SaveChangesAsync();
+                return Ok("Se actualizó correctamente");
+        }
+        [HttpDelete("{id}")] 
+        public async Task<ActionResult<Venta>> Delete(int id)
+        {
+            try{
+                var venta = await _context.ventas.FindAsync(id);
+                if (venta == null)
+                {
+                    return NotFound();
+                }
+
+                _context.ventas.Remove(venta);
+                await _context.SaveChangesAsync();
+
+                return venta;
+            } catch (Exception ex) {
+                return StatusCode(500, $"Ocurrió un error mientras se actualizaban los datos: {ex.Message}");
+            }
         }
     }
 }

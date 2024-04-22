@@ -12,7 +12,7 @@ using Ventas.Data;
 namespace Ventas.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240416193126_ConexionSQL")]
+    [Migration("20240418002724_ConexionSQL")]
     partial class ConexionSQL
     {
         /// <inheritdoc />
@@ -176,8 +176,14 @@ namespace Ventas.Migrations
                     b.Property<DateTime>("Fecha_venta")
                         .HasColumnType("datetime2");
 
+                    b.Property<double>("ITBIS")
+                        .HasColumnType("float");
+
                     b.Property<int>("ProductoId")
                         .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

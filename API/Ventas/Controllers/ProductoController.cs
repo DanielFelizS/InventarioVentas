@@ -99,5 +99,56 @@ namespace Ventas.Controllers
             // Devolver la lista paginada de dispositivos
             return paginatedList;
         }
+        [HttpPost]
+        public async Task<IActionResult> saveInformation([FromBody] ProductosDTO productos)
+        {
+            if (ModelState.IsValid)
+            {
+                Productos AddProductos = _mapper.Map<Productos>(productos);
+                _context.productos.AddAsync(AddProductos);
+                await _context.SaveChangesAsync();
+
+                // Devolver una respuesta CreatedAtRoute con el dispositivo creado
+                return CreatedAtRoute("ObtenerEmpleados", new { id = AddProductos.Id }, AddProductos);
+            }
+
+            return BadRequest(ModelState);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] ProductosDTO productos)
+        {
+            if (id != productos?.Id)
+            {
+                return BadRequest("No se encontró el ID");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+                Productos newProduct = _mapper.Map<Productos>(productos);
+                _context.Update(newProduct);
+                await _context.SaveChangesAsync();
+                return Ok("Se actualizó correctamente");
+        }
+        [HttpDelete("{id}")] 
+        public async Task<ActionResult<Productos>> Delete(int id)
+        {
+            try{
+                var producto = await _context.productos.FindAsync(id);
+                if (producto == null)
+                {
+                    return NotFound();
+                }
+
+                _context.productos.Remove(producto);
+                await _context.SaveChangesAsync();
+
+                return producto;
+            } catch (Exception ex) {
+                return StatusCode(500, $"Ocurrió un error mientras se actualizaban los datos: {ex.Message}");
+            }
+        }
     }
 }
