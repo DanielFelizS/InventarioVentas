@@ -1,7 +1,8 @@
-import React from 'react'
-
+import AgregarEmpleado from "../CrudPages/Empleados/AgregarEmpleado"
 export default function Empleados() {
   return (
-    <div>Empleados</div>
+    <>
+    <AgregarEmpleado/>
+    </>
   )
 }

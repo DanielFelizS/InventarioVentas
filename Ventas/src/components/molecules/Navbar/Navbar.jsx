@@ -14,14 +14,10 @@ export default function Navigation() {
             <NavLink to="/clientes" className="nav-link">Clientes</NavLink>
             <NavLink to="/productos" className="nav-link">Productos</NavLink>
             <NavLink to="/ventas" className="nav-link">Ventas</NavLink>
-            <NavLink to="/historial" className="nav-link">Auditoría</NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    <br />
-    <br />
-    <br />
     </>
   );
 }
