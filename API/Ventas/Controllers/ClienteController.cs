@@ -59,6 +59,34 @@ namespace Ventas.Controllers
             
             return paginatedList;
         }
+        [HttpGet("all", Name = "Clientes")]
+        public async Task<ActionResult<IEnumerable<ClientesDTO>>> Clientes()
+        {
+            IQueryable<ClientesDTO> consulta = _context.clientes
+                .Select(cliente => new ClientesDTO
+                {
+                    Id = cliente.Id,
+                    Nombre = cliente.Nombre,
+                    Apellido = cliente.Apellido,
+                    Telefono = cliente.Telefono,
+                    Email = cliente.Email,
+                    DNI = cliente.DNI
+                });
+
+            var clientes = await consulta.ToListAsync();
+
+            if (clientes == null || clientes.Count == 0)
+            {
+                return NotFound();
+            }
+
+            var totalCount = await _context.clientes.CountAsync();
+            
+            Response.Headers["X-Total-Count"] = totalCount.ToString();
+            Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
+
+            return clientes;
+        }
         [HttpGet("buscar")]
         public async Task<ActionResult<PaginatedList<ClientesDTO>>> Buscar(int id, int pageNumber = 1, int pageSize = 6, string buscar = null)
         {

@@ -59,6 +59,40 @@ namespace Ventas.Controllers
             
             return paginatedList;
         }
+        [HttpGet("all", Name = "Empleados")]
+        public async Task<ActionResult<IEnumerable<EmpleadosDTO>>> Empleados()
+        {
+            IQueryable<EmpleadosDTO> consulta = _context.empleados
+                .Select(empleado => new EmpleadosDTO
+                {
+                    Id = empleado.Id,
+                    Nombre = empleado.Nombre,
+                    Apellido = empleado.Apellido,
+                    Sexo = empleado.Sexo,
+                    Edad = empleado.Edad,
+                    Telefono = empleado.Telefono,
+                    Email = empleado.Email,
+                    DNI = empleado.DNI,
+                    Sueldo = empleado.Sueldo,
+                    Cargo = empleado.Cargo,
+                    FechaNacimiento = empleado.FechaNacimiento,
+                    FechaContratacion = empleado.FechaContratacion
+                });
+
+            var empleados = await consulta.ToListAsync();
+
+            if (empleados == null || empleados.Count == 0)
+            {
+                return NotFound();
+            }
+
+            var totalCount = await _context.empleados.CountAsync();
+            
+            Response.Headers["X-Total-Count"] = totalCount.ToString();
+            Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
+
+            return empleados;
+        }
         [HttpGet("buscar")]
         public async Task<ActionResult<PaginatedList<EmpleadosDTO>>> Buscar(int id, int pageNumber = 1, int pageSize = 6, string buscar = null)
         {

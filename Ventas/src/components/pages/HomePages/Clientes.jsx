@@ -1,7 +1,9 @@
-import React from 'react'
+import AgregarCliente from "../CrudPages/Clientes/AgregarCliente"
 
 export default function Clientes() {
   return (
-    <div>Clientes</div>
+    <>
+     <AgregarCliente/>
+    </>
   )
 }

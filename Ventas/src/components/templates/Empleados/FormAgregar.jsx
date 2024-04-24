@@ -2,7 +2,47 @@ import FormInput from "../../atoms/Input";
 import Select from "../../atoms/Select";
 import BtnAction from "../../atoms/Button";
 import { InputGroup, Form } from "react-bootstrap";
+import { useState } from "react";
+
 export default function FormAgregar() {
+
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [sexo, setSexo] = useState();
+  const [edad, setEdad] = useState(18);
+  const [telefono, setTelefono] = useState("");
+  const [email, setEmail] = useState("");
+  const [dni, setDni] = useState("");
+  const [sueldo, setSueldo] = useState(1000);
+  const [cargo, setCargo] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [fechaContratacion, setFechaContratacion] = useState("");
+  const [data, setData] = useState("");
+
+  const AgregarEmpleados = async () => {
+    const datos = {
+      nombre: nombre,
+      apellido: apellido,
+      sexo: sexo,
+      edad: edad,
+      telefono: telefono,
+      email: email,
+      dni: dni,
+      sueldo: sueldo,
+      cargo: cargo,
+      fechaNacimiento: fechaNacimiento,
+      fechaContratacion: fechaContratacion
+    }
+    try{
+      const response = await api.post('/empleado', datos)
+      setData([...data, response.data]);
+      alert("Los datos del empleado se agregaron correctamente");
+    }
+    catch(error){
+      console.error(`Ha ocurrido un error: ${error}`)
+    }
+  }
+
   return (
     <>
       <Form className="FormData">
@@ -14,26 +54,29 @@ export default function FormAgregar() {
               InputType="text"
               InputPlaceholder="Juan"
               InputName="nombre"
-              Inputvalue=""
-              InputChange={"estado"}
+              Inputvalue={nombre}
+              InputChange={(e)=> setNombre(e.target.value)}
             />
             <FormInput
               InputTitle=""
               InputType="text"
               InputPlaceholder="Perez"
               InputName="apellido"
-              Inputvalue=""
-              InputChange={"estado"}
+              Inputvalue={apellido}
+              InputChange={(e)=> setApellido(e.target.value)}
             />
           </InputGroup>
 
           <Form.Label>Sexo y Edad:</Form.Label>
           <InputGroup>
-            <Select
+            <Select 
+            OptionLabel={"Sexo"}
+            SelectValue={sexo}
+            SelectChange={(e)=> setSexo(e.target.value)}
               Options={
                 <>
-                  <option value="">M</option>
-                  <option value="">F</option>
+                  <option value="m">M</option>
+                  <option value="f">F</option>
                 </>
               }
               SelectLabel=""
@@ -43,8 +86,8 @@ export default function FormAgregar() {
               InputType="number"
               InputPlaceholder="18"
               InputName="Edad"
-              Inputvalue=""
-              InputChange={"estado"}
+              Inputvalue={edad}
+              InputChange={(e)=> setEdad(e.target.value)}
             />
           </InputGroup>
 
@@ -55,16 +98,16 @@ export default function FormAgregar() {
               InputType="text"
               InputPlaceholder="+1 (123) 4567 890"
               InputName="telefono"
-              Inputvalue=""
-              InputChange={"estado"}
+              Inputvalue={telefono}
+              InputChange={(e)=> setTelefono(e.target.value)}
             />
             <FormInput
               InputTitle=""
               InputType="email"
               InputPlaceholder="juanperez@correo.com"
               InputName="email"
-              Inputvalue=""
-              InputChange={"estado"}
+              Inputvalue={email}
+              InputChange={(e)=> setEmail(e.target.value)}
             />
           </InputGroup>
 
@@ -73,27 +116,25 @@ export default function FormAgregar() {
             InputType="text"
             InputPlaceholder="1-2334454665767-809"
             InputName="dni"
-            Inputvalue=""
-            InputChange={"estado"}
+            Inputvalue={dni}
+            InputChange={(e)=> setDni(e.target.value)}
           />
-
           <FormInput
             InputTitle="Sueldo: "
             InputType="number"
             InputPlaceholder="50,000"
             InputName="sueldo"
-            Inputvalue=""
-            InputChange={"estado"}
+            Inputvalue={sueldo}
+            InputChange={(e)=> setSueldo(e.target.value)}
           />
           <FormInput
             InputTitle="Cargo: "
             InputType="text"
             InputPlaceholder="Conserje"
             InputName="cargo"
-            Inputvalue=""
-            InputChange={"estado"}
+            Inputvalue={cargo}
+            InputChange={(e)=> setCargo(e.target.value)}
           />
-
           <Form.Label>Fecha de nacimiento y fecha de contratación: </Form.Label>
           <InputGroup>
             <FormInput
@@ -101,22 +142,22 @@ export default function FormAgregar() {
               InputType="date"
               InputPlaceholder=""
               InputName="fechaNacimiento"
-              Inputvalue=""
-              InputChange={"estado"}
+              Inputvalue={fechaNacimiento}
+              InputChange={(e)=> setFechaNacimiento(e.target.value)}
             />
             <FormInput
               InputTitle=""
               InputType="date"
               InputPlaceholder=""
               InputName="fechaContratacion"
-              Inputvalue=""
-              InputChange={"estado"}
+              Inputvalue={fechaContratacion}
+              InputChange={(e)=> setFechaContratacion(e.target.value)}
             />
           </InputGroup>
         </Form.Group>
 
-        <BtnAction btnColor="primary" btnClick={""} btnContent="Agregar" />
-        <BtnAction btnColor="danger" btnClick={""} btnContent="Cancelar" />
+        <BtnAction btnColor="primary" btnClick={AgregarEmpleados} btnContent="Agregar"/>
+        <BtnAction btnColor="danger" btnClick={""} btnContent="Cancelar"/>
       </Form>
     </>
   );

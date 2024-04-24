@@ -10,8 +10,8 @@ namespace Ventas.DTOs
         public int Id {get; set;}
         public string Nombre {get; set;}
         public string Apellido {get; set;}
-        public string Telefono {get; set;}
+        public string Telefono {get; set;} = "No tiene";
         public string Email {get; set;} = "No tiene";
-        public string DNI {get; set;}
+        public string DNI {get; set;} = "Es menor de edad o no tiene identificación";
     }
 }

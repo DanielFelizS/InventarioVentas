@@ -1,7 +1,8 @@
-import React from 'react'
-
+import AgregarProducto from '../CrudPages/Productos/AgregarProducto'
 export default function Productos() {
   return (
-    <div>Productos</div>
+    <>
+    <AgregarProducto/>
+    </>
   )
 }

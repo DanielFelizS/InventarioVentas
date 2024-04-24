@@ -1,7 +1,9 @@
-import React from 'react'
+import AgregarVenta from "../CrudPages/Ventas/AgregarVenta"
 
 export default function Ventas() {
   return (
-    <div>Ventas</div>
+    <>
+     <AgregarVenta/>
+    </>
   )
 }
