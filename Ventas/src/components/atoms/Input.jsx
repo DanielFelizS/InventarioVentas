@@ -10,7 +10,7 @@ export default function FormInput ({
 }) {
   return (
     <>
-      <Form.Label>{InputTitle}</Form.Label>
+      <Form.Label>{InputTitle ? InputTitle : null}</Form.Label>
       <Form.Control
         type={InputType}
         placeholder={InputPlaceholder}

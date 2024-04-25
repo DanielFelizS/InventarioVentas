@@ -9,15 +9,6 @@ export default function Select({ Options, SelectLabel, SelectValue, SelectChange
         <option disabled>{OptionLabel}</option>
         {Options}
       </FormSelect>
-
-      {/* <select value={departamentoId} onChange={handleDepartamentoChange} className="SelectData">
-            <option disabled>Nombre del departamento</option>
-            {departamentos.map((departamento) => (
-              <option key={departamento.id} value={departamento.id}>
-                {departamento.nombre}
-              </option>
-            ))}
-          </select> */}
     </>
   );
 }

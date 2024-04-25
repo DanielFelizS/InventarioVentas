@@ -1,14 +1,20 @@
-import FormInput from "../../atoms/Input";
-import Select from "../../atoms/Select";
-import BtnAction from "../../atoms/Button";
-import { InputGroup, Form } from "react-bootstrap";
-import { useState } from "react";
+import {
+  FormInput,
+  Select,
+  BtnAction,
+  InputGroup,
+  Form,
+  api,
+  useState,
+  useEffect,
+  usePost
+} from "../Dependencies";
 
 export default function FormAgregar() {
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-  const [sexo, setSexo] = useState();
+  const [sexo, setSexo] = useState("");
   const [edad, setEdad] = useState(18);
   const [telefono, setTelefono] = useState("");
   const [email, setEmail] = useState("");
@@ -17,7 +23,7 @@ export default function FormAgregar() {
   const [cargo, setCargo] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
   const [fechaContratacion, setFechaContratacion] = useState("");
-  const [data, setData] = useState("");
+  const { AgregarDatos } = usePost({ url: "empleado"})
 
   const AgregarEmpleados = async () => {
     const datos = {
@@ -33,14 +39,7 @@ export default function FormAgregar() {
       fechaNacimiento: fechaNacimiento,
       fechaContratacion: fechaContratacion
     }
-    try{
-      const response = await api.post('/empleado', datos)
-      setData([...data, response.data]);
-      alert("Los datos del empleado se agregaron correctamente");
-    }
-    catch(error){
-      console.error(`Ha ocurrido un error: ${error}`)
-    }
+    AgregarDatos(datos)
   }
 
   return (
@@ -75,14 +74,13 @@ export default function FormAgregar() {
             SelectChange={(e)=> setSexo(e.target.value)}
               Options={
                 <>
-                  <option value="m">M</option>
-                  <option value="f">F</option>
+                  <option value="M">M</option>
+                  <option value="F">F</option>
                 </>
               }
               SelectLabel=""
             />
             <FormInput
-              InputTitle=""
               InputType="number"
               InputPlaceholder="18"
               InputName="Edad"

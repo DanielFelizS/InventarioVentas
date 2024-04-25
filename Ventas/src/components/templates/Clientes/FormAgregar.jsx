@@ -1,8 +1,14 @@
-import FormInput from "../../atoms/Input";
-import BtnAction from "../../atoms/Button";
-import { InputGroup, Form } from "react-bootstrap";
-import { useState } from "react";
-import api from "../../../../config";
+import {
+  FormInput,
+  Select,
+  BtnAction,
+  InputGroup,
+  Form,
+  api,
+  useState,
+  useEffect,
+  usePost
+} from "../Dependencies";
 
 export default function FormAgregar() {
   const [nombre, setNombre] = useState("");
@@ -10,7 +16,7 @@ export default function FormAgregar() {
   const [telefono, setTelefono] = useState("");
   const [email, setEmail] = useState("");
   const [dni, setDni] = useState("");
-  const [data, setData] = useState([]);
+  const { AgregarDatos } = usePost({url: "cliente"});
 
   const AgregarClientes = async ()=> {
     const datos = {
@@ -20,14 +26,7 @@ export default function FormAgregar() {
       email: email,
       dni: dni
     }
-    try{
-      const response = await api.post('/cliente', datos);
-      setData([...data, response.data]);
-      alert("Los datos del cliente han sido agregados correctamente");
-    }
-    catch(error){
-      console.error(`Ha ocurrido un error: ${error}`);
-    }
+    AgregarDatos(datos)
   }
 
   return (
