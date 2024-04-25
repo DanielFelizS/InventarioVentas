@@ -59,6 +59,29 @@ namespace Ventas.Controllers
             
             return paginatedList;
         }
+        [HttpGet("{id}", Name = "GetProducto")]
+        public async Task<ActionResult<ProductosDTO>> GetProducto(int id)
+        {
+            var producto = await _context.productos
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            // Mapear el producto a un DTO que incluya el nombre del departamento
+            var productosDTO = new ProductosDTO
+            {
+                Id = producto.Id,
+                Producto = producto.Producto,
+                Precio = producto.Precio,
+                Descripcion = producto.Descripcion,
+                Disponible = producto.Disponible,
+            };
+
+            return productosDTO;
+        }
         [HttpGet("all", Name = "Productos")]
         public async Task<ActionResult<IEnumerable<ProductosDTO>>> Productos()
         {
@@ -101,7 +124,7 @@ namespace Ventas.Controllers
 
             var totalCount = await consulta.CountAsync();
 
-            // Obtener los dispositivos paginados
+            // Obtener los productos paginados
             var paginacionProductos = await consulta
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -123,7 +146,7 @@ namespace Ventas.Controllers
             // Exponer el encabezado 'X-Total-Count'
             Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
 
-            // Devolver la lista paginada de dispositivos
+            // Devolver la lista paginada de productos
             return paginatedList;
         }
         [HttpPost]
@@ -135,7 +158,7 @@ namespace Ventas.Controllers
                 _context.productos.AddAsync(AddProductos);
                 await _context.SaveChangesAsync();
 
-                // Devolver una respuesta CreatedAtRoute con el dispositivo creado
+                // Devolver una respuesta CreatedAtRoute con el producto creado
                 return CreatedAtRoute("ObtenerEmpleados", new { id = AddProductos.Id }, AddProductos);
             }
 

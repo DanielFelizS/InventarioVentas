@@ -59,6 +59,36 @@ namespace Ventas.Controllers
             
             return paginatedList;
         }
+        [HttpGet("{id}", Name = "GetEmpleado")]
+        public async Task<ActionResult<EmpleadosDTO>> GetEmpleado(int id)
+        {
+            var empleado = await _context.empleados
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+
+            // Mapear el empleado a un DTO que incluya el nombre del departamento
+            var EmpleadosDTO = new EmpleadosDTO
+            {
+                Id = empleado.Id,
+                Nombre = empleado.Nombre,
+                Apellido = empleado.Apellido,
+                Sexo = empleado.Sexo,
+                Edad = empleado.Edad,
+                Telefono = empleado.Telefono,
+                Email = empleado.Email,
+                DNI = empleado.DNI,
+                Sueldo = empleado.Sueldo,
+                Cargo = empleado.Cargo,
+                FechaNacimiento = empleado.FechaNacimiento,
+                FechaContratacion = empleado.FechaContratacion
+            };
+
+            return EmpleadosDTO;
+        }
         [HttpGet("all", Name = "Empleados")]
         public async Task<ActionResult<IEnumerable<EmpleadosDTO>>> Empleados()
         {

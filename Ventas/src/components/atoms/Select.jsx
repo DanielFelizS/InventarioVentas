@@ -6,7 +6,7 @@ export default function Select({ Options, SelectLabel, SelectValue, SelectChange
     <>
       <Form.Label>{SelectLabel ? SelectLabel : null}</Form.Label>
       <FormSelect value={SelectValue} onChange={SelectChange}>
-        <option disabled>{OptionLabel}</option>
+        <option disabled>{OptionLabel? OptionLabel: null}</option>
         {Options}
       </FormSelect>
     </>

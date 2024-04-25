@@ -59,6 +59,30 @@ namespace Ventas.Controllers
             
             return paginatedList;
         }
+        [HttpGet("{id}", Name = "ClientePorId")]
+        public async Task<ActionResult<ClientesDTO>> ClientePorId(int id)
+        {
+            var cliente = await _context.clientes
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            // Mapear el cliente a un DTO que incluya el nombre del departamento
+            var clientesDTO = new ClientesDTO
+            {
+                Id = cliente.Id,
+                Nombre = cliente.Nombre,
+                Apellido = cliente.Apellido,
+                Telefono = cliente.Telefono,
+                Email = cliente.Email,
+                DNI = cliente.DNI
+            };
+
+            return clientesDTO;
+        }
         [HttpGet("all", Name = "Clientes")]
         public async Task<ActionResult<IEnumerable<ClientesDTO>>> Clientes()
         {

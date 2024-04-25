@@ -13,7 +13,7 @@ export default function FormInput ({
       <Form.Label>{InputTitle ? InputTitle : null}</Form.Label>
       <Form.Control
         type={InputType}
-        placeholder={InputPlaceholder}
+        placeholder={InputPlaceholder ? InputPlaceholder: null}
         name={InputName}
         value={Inputvalue}
         onChange={InputChange}

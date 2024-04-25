@@ -70,6 +70,36 @@ namespace Ventas.Controllers
 
             return paginatedList;
         }
+        [HttpGet("{id}", Name = "VentaPorId")]
+        public async Task<ActionResult<VentaDTO>> VentaPorId(int id)
+        {
+            var venta = await _context.ventas
+                .Include(d => d.productos)
+                .Include(d => d.empleados)
+                .Include(d => d.clientes)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (venta == null)
+            {
+                return NotFound();
+            }
+
+            // Mapear el cliente a un DTO que incluya el nombre del departamento
+            var ventaDTO = new VentaDTO
+            {
+                Id = venta.Id,
+                nombre_producto = venta.productos.Producto,
+                precio_producto = venta.productos.Precio,
+                nombre_empleado = venta.empleados.Nombre,
+                nombre_cliente = venta.clientes.Nombre,
+                Cantidad = venta.Cantidad,
+                Fecha_venta = venta.Fecha_venta,
+                Total = venta.Total,
+                ITBIS = venta.ITBIS
+            };
+
+            return ventaDTO;
+        }
         [HttpGet("buscar")]
         public async Task<ActionResult<PaginatedList<VentaDTO>>> Buscar(int id, int pageNumber = 1, int pageSize = 6, string buscar = null)
         {
