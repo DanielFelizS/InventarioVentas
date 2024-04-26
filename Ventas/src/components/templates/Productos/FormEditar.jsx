@@ -1,26 +1,30 @@
 import {
-    FormInput,
-    Select,
-    BtnAction,
-    InputGroup,
-    Form,
-    api,
-    useState,
-    useEffect,
-    usePut,
-    useParams
-  } from "../Dependencies";
-  
-  export default function FormEditar() {
-    const [edit, setEdit] = useState({
-        producto: "",
-        precio: 0,
-        descripcion: "",
-        disponible: null
-    })
-    const { editarDatos } = usePut({url: "producto", PropEdit: edit})
+  FormInput,
+  Select,
+  BtnAction,
+  InputGroup,
+  Form,
+  api,
+  useState,
+  useEffect,
+  usePut,
+  useParams,
+} from "../Dependencies";
 
-    const { id } = useParams();
+export default function FormEditar() {
+  const [edit, setEdit] = useState({
+    producto: "",
+    precio: 0,
+    descripcion: "",
+    disponible: null,
+  });
+  const { editarDatos, handleNavigate } = usePut({
+    url: "producto",
+    PropEdit: edit,
+    urlRuta: "productos",
+  });
+
+  const { id } = useParams();
 
   useEffect(() => {
     obtenerDatos();
@@ -29,11 +33,11 @@ import {
   const obtenerDatos = async () => {
     try {
       const response = await api.get(`/producto/${id}`);
-    //   const fechaModificacion = response.data.disponible.toString(); 
+      //   const fechaModificacion = response.data.disponible.toString();
       setEdit({
-      ...response.data,
-    //   fecha_modificacion: fechaModificacion,
-    })
+        ...response.data,
+        //   fecha_modificacion: fechaModificacion,
+      });
     } catch (error) {
       setError("Error al consultarse los datos");
       console.error(error);
@@ -47,60 +51,61 @@ import {
       [name]: value,
     }));
   };
-  
-    
-  
-    return (
-      <>
-        <Form className="FormData">
-          <Form.Group className="mb-3" controlId="">
-            <Form.Label>Nombre del producto y descripción: </Form.Label>
-            <InputGroup>
-              <FormInput
-                InputType="text"
-                InputPlaceholder="Jamón"
-                InputName="producto"
-                Inputvalue={edit.producto}
-                InputChange={handleInputChange}
-              />
-              <FormInput
-                InputType="text"
-                InputPlaceholder="Íberico Gr."
-                InputName="descripicion"
-                Inputvalue={edit.descripcion}
-                InputChange={handleInputChange}
-              />
-            </InputGroup>
-  
+
+  return (
+    <>
+      <Form className="FormData">
+        <Form.Group className="mb-3" controlId="">
+          <Form.Label>Nombre del producto y descripción: </Form.Label>
+          <InputGroup>
             <FormInput
-              InputTitle="Precio"
-              InputType="number"
-              InputPlaceholder="100 US$"
-              InputName="precio"
-              Inputvalue={edit.precio}
+              InputType="text"
+              InputPlaceholder="Jamón"
+              InputName="producto"
+              Inputvalue={edit.producto}
               InputChange={handleInputChange}
             />
-            <Select
-              SelectLabel="Disponible: "
-              OptionLabel="Todavía hay productos"
-              SelectValue={edit.disponible}
-              SelectChange={handleInputChange}
-              Options={
-                <>
-                  <option value="true">Si</option>
-                  <option value="false">No</option>
-                </>
-              }
+            <FormInput
+              InputType="text"
+              InputPlaceholder="Íberico Gr."
+              InputName="descripicion"
+              Inputvalue={edit.descripcion}
+              InputChange={handleInputChange}
             />
-          </Form.Group>
-          <BtnAction
-            btnColor="warning"
-            btnClick={editarDatos}
-            btnContent="Editar"
+          </InputGroup>
+
+          <FormInput
+            InputTitle="Precio"
+            InputType="number"
+            InputPlaceholder="100 US$"
+            InputName="precio"
+            Inputvalue={edit.precio}
+            InputChange={handleInputChange}
           />
-          {/* <BtnAction btnColor="danger" btnClick={""} btnContent="Cancelar" /> */}
-        </Form>
-      </>
-    );
-  }
-  
+          <Select
+            SelectLabel="Disponible: "
+            OptionLabel="Todavía hay productos"
+            SelectValue={edit.disponible}
+            SelectChange={handleInputChange}
+            Options={
+              <>
+                <option value="true">Si</option>
+                <option value="false">No</option>
+              </>
+            }
+          />
+        </Form.Group>
+        <BtnAction
+          btnColor="warning"
+          btnClick={editarDatos}
+          btnContent="Editar"
+        />
+        <BtnAction
+          btnColor="danger"
+          btnClick={handleNavigate}
+          btnContent="Cancelar"
+        />
+      </Form>
+    </>
+  );
+}

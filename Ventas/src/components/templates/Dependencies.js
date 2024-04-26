@@ -1,6 +1,6 @@
-import FormInput from "../atoms/Input";
-import Select from "../atoms/Select";
-import BtnAction from "../atoms/Button";
+import FormInput from "../atoms/Input/Input";
+import Select from "../atoms/Select/Select";
+import BtnAction from "../atoms/Button/Button";
 import { InputGroup, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import api from '../../../config'

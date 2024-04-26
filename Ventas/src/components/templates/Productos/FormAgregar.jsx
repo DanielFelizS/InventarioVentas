@@ -4,9 +4,7 @@ import {
   BtnAction,
   InputGroup,
   Form,
-  api,
   useState,
-  useEffect,
   usePost
 } from "../Dependencies";
 
@@ -15,7 +13,7 @@ export default function FormAgregar() {
   const [precio, setPrecio] = useState(1);
   const [disponible, setDisponible] = useState(false);
   const [descripcion, setDescripcion] = useState("");
-  const { AgregarDatos } = usePost({url: "producto"})
+  const { AgregarDatos, handleNavigate } = usePost({url: "producto", urlRuta: "productos"});
 
   const AgregarProducto = async () => {
     const datos = {
@@ -75,7 +73,7 @@ export default function FormAgregar() {
           btnClick={AgregarProducto}
           btnContent="Agregar"
         />
-        {/* <BtnAction btnColor="danger" btnClick={""} btnContent="Cancelar" /> */}
+        <BtnAction btnColor="danger" btnClick={handleNavigate} btnContent="Cancelar" />
       </Form>
     </>
   );

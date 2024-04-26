@@ -1,13 +1,11 @@
 import {
   FormInput,
-  Select,
   BtnAction,
   InputGroup,
   Form,
-  api,
   useState,
-  useEffect,
-  usePost
+  usePost,
+  useNavigate
 } from "../Dependencies";
 
 export default function FormAgregar() {
@@ -16,7 +14,8 @@ export default function FormAgregar() {
   const [telefono, setTelefono] = useState("");
   const [email, setEmail] = useState("");
   const [dni, setDni] = useState("");
-  const { AgregarDatos } = usePost({url: "cliente"});
+  const { AgregarDatos, handleNavigate } = usePost({url: "cliente", urlRuta: "clientes"});
+
 
   const AgregarClientes = async ()=> {
     const datos = {
@@ -84,7 +83,7 @@ export default function FormAgregar() {
         </Form.Group>
 
         <BtnAction btnColor="primary" btnClick={AgregarClientes} btnContent="Agregar" />
-        <BtnAction btnColor="danger" btnClick={""} btnContent="Cancelar" />
+        <BtnAction btnColor="danger" btnClick={handleNavigate} btnContent="Cancelar" />
       </Form>
     </>
   );

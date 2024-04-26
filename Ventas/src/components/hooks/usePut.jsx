@@ -2,12 +2,12 @@ import { useState } from "react";
 import { api } from "../templates/Dependencies";
 import { useNavigate } from "react-router-dom";
 
-export default function usePut({ PropEdit, url }) {
+export default function usePut({ PropEdit, url, urlRuta }) {
     const [msg, setMsg] = useState("");
 
     const navigate = useNavigate();
     const handleNavigate = () => {
-      navigate(`/${url}`);
+      navigate(`/${urlRuta}`);
     };
 
     const editarDatos = async () => {
@@ -27,6 +27,7 @@ export default function usePut({ PropEdit, url }) {
 
   return {
     msg,
-    editarDatos
+    editarDatos,
+    handleNavigate
   }
 }

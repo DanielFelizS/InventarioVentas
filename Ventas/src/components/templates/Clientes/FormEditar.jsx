@@ -19,7 +19,8 @@ import {
         dni: ""
     })
 
-    const { editarDatos } = usePut({url: "cliente", PropEdit: edit});
+    const { editarDatos, handleNavigate } = usePut({ url: "cliente", PropEdit: edit, urlRuta: "clientes"})
+
     const { id } = useParams();
 
     useEffect(() => {
@@ -101,7 +102,7 @@ import {
           </Form.Group>
   
           <BtnAction btnColor="warning" btnClick={editarDatos} btnContent="Editar" />
-          {/* <BtnAction btnColor="danger" btnClick={""} btnContent="Cancelar" /> */}
+          <BtnAction btnColor="danger" btnClick={handleNavigate} btnContent="Cancelar" />
         </Form>
       </>
     );

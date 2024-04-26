@@ -14,7 +14,7 @@ export default function FormAgregar() {
   const [empleadoId, setEmpleadoId] = useState();
   const [clienteId, setClienteId] = useState();
   const [cantidad, setCantidad] = useState(1);
-  const { AgregarDatos } = usePost( {url: "ventas"} );
+  const { AgregarDatos, handleNavigate } = usePost({url: "venta", urlRuta: "ventas"});
   const { empleado } = useGet({ url: `/empleado/all`});
   const { cliente } = useGet({ url: `/cliente/all`});
   const { productos } = useGet({ url: `/producto/all`});

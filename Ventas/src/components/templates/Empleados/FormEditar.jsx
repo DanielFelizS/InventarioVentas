@@ -26,7 +26,7 @@ import {
         fechaContratacion: ""
     })
 
-    const { editarDatos } = usePut({ url: "empleado", PropEdit: edit})
+    const { editarDatos, handleNavigate } = usePut({ url: "empleado", PropEdit: edit, urlRuta: "empleados"})
     const { id } = useParams();
 
     useEffect(() => {
@@ -160,7 +160,7 @@ import {
           </Form.Group>
   
           <BtnAction btnColor="warning" btnClick={editarDatos} btnContent="Editar"/>
-          {/* <BtnAction btnColor="danger" btnClick={""} btnContent="Cancelar"/> */}
+          <BtnAction btnColor="danger" btnClick={handleNavigate} btnContent="Cancelar"/>
         </Form>
       </>
     );
