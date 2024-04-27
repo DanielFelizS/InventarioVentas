@@ -5,7 +5,6 @@ import {
   Empleados,
   Clientes, 
   Ventas, 
-  Inicio,
   AgregarCliente,
   AgregarEmpleado,
   AgregarVenta,
@@ -19,16 +18,24 @@ import {
   EliminarEmpleado,
   EliminarVenta,
 } from "./components/pages/Dependencies";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import './App.css'
 
 import { Routes, Route } from "react-router-dom";
 export default function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.pathname == '/') {
+      navigate('/empleados');
+    }
+  }, [navigate, location]);
   return (
     <>
       <Navigation />
 
       <Routes>
-        <Route path='/inicio' element={<Inicio />} />
         <Route path='/empleados' element={<Empleados />} />
         <Route path='/agregar_empleado' element={<AgregarEmpleado />} />
         <Route path='/editar_empleado/:id' element={<EditarEmpleado />} />
