@@ -1,5 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navigation from "./components/molecules/Navbar/Navbar";
 import {
   Productos,
   Empleados,
@@ -33,7 +32,6 @@ export default function App() {
   }, [navigate, location]);
   return (
     <>
-      <Navigation />
 
       <Routes>
         <Route path='/empleados' element={<Empleados />} />

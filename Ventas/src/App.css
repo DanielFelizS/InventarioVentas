@@ -4,6 +4,12 @@
     box-sizing: border-box;
     text-decoration: none;
   }
+  #navbar {
+    width: 100%;
+    position: fixed;
+    z-index: 1; 
+    top: 0;
+  }
   
   table{
     text-align: center;
@@ -39,12 +45,6 @@
     padding-left: 16px;
     padding-bottom: 16px;
   }
-  
-  /* th {
-    background-color: #f2f2f2; 
-  } */
-  
-  
   td {
     min-width: 200px; 
   }
@@ -53,3 +53,15 @@
     width: 180px;
     margin-left: 10px;
   }
+  .FormData{
+    margin: auto;
+    margin-top: 2%;
+    max-width: 86%;
+  }
+  .btn-Agregar{
+    width: 110%;
+    position: fixed;
+    /* z-index: 1;  */
+    top: 60px;
+  }
+  

@@ -2,6 +2,7 @@ import { Table, BtnAction, FormInput, saveAs } from "../Dependencies";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from '../../../../config'
+import Navigation from "../../molecules/Navbar/Navbar";
 
 export default function Clientes () {
   const [search, setSearch] = useState('');
@@ -33,6 +34,8 @@ export default function Clientes () {
 
   return (
     <>
+      <Navigation />
+
       <div className='btn-Agregar'>
 
       <FormInput value={search} InputChange={handleChangeSearch} InputType='text' InputPlaceholder="Buscar" />
