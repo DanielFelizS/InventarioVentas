@@ -168,6 +168,60 @@ namespace Ventas.Controllers
             // Devolver la lista paginada de dispositivos
             return paginatedList;
         }
+        [HttpGet("exportar-excel")]
+        public async Task<IActionResult> ExportarExcel(string filtro = null)
+        {
+            // Obtener los datos
+            IQueryable<Empleados> consulta = _context.empleados;
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                consulta = consulta.Where(d => d.Nombre != null && d.Nombre.Contains(filtro) ||
+                d.Apellido != null && d.Apellido.Contains(filtro) ||
+                d.Telefono != null && d.Telefono.Contains(filtro) ||
+                d.Email != null && d.Email.Contains(filtro) ||
+                d.Cargo != null && d.Cargo.Contains(filtro) ||
+                d.Sueldo.ToString() != null && d.Sueldo.ToString().Contains(filtro) ||
+                d.FechaContratacion.ToString() != null && d.FechaContratacion.ToString().Contains(filtro) ||
+                d.DNI != null && d.DNI.Contains(filtro)
+                );
+            }
+            var empleados = 
+            await consulta
+            // await _context.empleados
+                // .Include(d => d.departamento)
+                .Select(empleado => new
+                {
+                    empleado.Id,
+                    empleado.Nombre,
+                    empleado.Apellido,
+                    empleado.Sexo,
+                    empleado.Edad,
+                    empleado.Telefono,
+                    empleado.Email,
+                    empleado.DNI,
+                    empleado.Sueldo,
+                    empleado.Cargo,
+                    empleado.FechaNacimiento,
+                    empleado.FechaContratacion
+                })
+                .ToListAsync();
+
+            // Crear un archivo de Excel
+            using (var excel = new ExcelPackage())
+            {
+                var workSheet = excel.Workbook.Worksheets.Add("Empleados");
+                
+                // Cargar los datos en la hoja de Excel
+                workSheet.Cells.LoadFromCollection(empleados, true);
+
+                // Convertir el archivo de Excel en bytes
+                var excelBytes = excel.GetAsByteArray();
+
+                // Devolver el archivo de Excel como un FileContentResult
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Empleados.xlsx");
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> saveInformation([FromBody] EmpleadosDTO empleado)
         {

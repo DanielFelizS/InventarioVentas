@@ -1,4 +1,4 @@
-import { Table, BtnAction, FormInput } from "../Dependencies";
+import { Table, BtnAction, FormInput, saveAs } from "../Dependencies";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from '../../../../config'

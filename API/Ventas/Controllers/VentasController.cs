@@ -162,6 +162,54 @@ namespace Ventas.Controllers
 
             return paginatedList;
         }
+        [HttpGet("exportar-excel")]
+        public async Task<IActionResult> ExportarExcel(string filtro = null)
+        {
+            // Obtener los datos
+            IQueryable<Venta> consulta = _context.ventas
+            .Include(d => d.empleados)
+            .Include(d => d.clientes)
+            .Include(d => d.productos);
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                consulta = consulta.Where(d => d.productos.Producto != null && d.productos.Producto.Contains(filtro) ||
+                d.productos.Precio.ToString() != null && d.productos.Precio.ToString().Contains(filtro) ||
+                d.empleados.Nombre != null && d.empleados.Nombre.Contains(filtro) ||
+                d.clientes.Nombre != null && d.clientes.Nombre.Contains(filtro) ||
+                d.Fecha_venta.ToString() != null && d.Fecha_venta.ToString().Contains(filtro));
+            }
+            var ventas = 
+            await consulta
+                .Select(venta => new
+                {
+                    venta.Id,
+                    Nombre_producto = venta.productos.Producto,
+                    Precio_producto = venta.productos.Precio,
+                    Nombre_empleado = venta.empleados.Nombre,
+                    Nombre_cliente = venta.clientes.Nombre,
+                    venta.Cantidad,
+                    venta.Fecha_venta,
+                    venta.Total,
+                    venta.ITBIS
+                })
+                .ToListAsync();
+
+            // Crear un archivo de Excel
+            using (var excel = new ExcelPackage())
+            {
+                var workSheet = excel.Workbook.Worksheets.Add("Ventas");
+                
+                // Cargar los datos en la hoja de Excel
+                workSheet.Cells.LoadFromCollection(ventas, true);
+
+                // Convertir el archivo de Excel en bytes
+                var excelBytes = excel.GetAsByteArray();
+
+                // Devolver el archivo de Excel como un FileContentResult
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ventas.xlsx");
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> saveInformation([FromBody] VentaCreateDTO venta)
         {

@@ -15,7 +15,7 @@ export default function EliminarDatos({ urlDato, ruta, Entidad }) {
         </Modal.Header>
 
         <Modal.Body>
-          <p>¿Estás seguro de querer eliminar el dato de {Entidad}?</p>
+          <p>¿Estás seguro de querer eliminar los datos de {Entidad}?</p>
         </Modal.Body>
 
         <Modal.Footer>

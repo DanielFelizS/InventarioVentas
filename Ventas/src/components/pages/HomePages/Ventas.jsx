@@ -1,4 +1,4 @@
-import { Table, BtnAction, FormInput } from "../Dependencies";
+import { Table, BtnAction, FormInput, saveAs } from "../Dependencies";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../../config";
@@ -14,7 +14,7 @@ export default function Ventas() {
   const ExportarExcel = async () => {
     setMsg("Generando excel...");
     try {
-      const response = await api.get(`/venta/exportar-excel?filtro=${search}`, {
+      const response = await api.get(`/ventas/exportar-excel?filtro=${search}`, {
         responseType: "blob",
       });
       const blob = new Blob([response.data], { type: "application/xlsx" });

@@ -96,7 +96,7 @@ export default function FormAgregar() {
           btnClick={AgregarVenta}
           btnContent="Agregar"
         />
-        <BtnAction btnColor="danger" btnClick={""} btnContent="Cancelar" />
+        <BtnAction btnColor="danger" btnClick={handleNavigate} btnContent="Cancelar" />
       </Form>
     </>
   );

@@ -149,6 +149,46 @@ namespace Ventas.Controllers
             // Devolver la lista paginada de productos
             return paginatedList;
         }
+        [HttpGet("exportar-excel")]
+        public async Task<IActionResult> ExportarExcel(string filtro = null)
+        {
+            // Obtener los datos
+            IQueryable<Productos> consulta = _context.productos;
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                consulta = consulta.Where(d => d.Producto != null && d.Producto.Contains(filtro) ||
+                d.Precio.ToString() != null && d.Precio.ToString().Contains(filtro) ||
+                d.Descripcion != null && d.Descripcion.Contains(filtro) ||
+                d.Disponible.ToString() != null && d.Disponible.ToString().Contains(filtro));
+            }
+            var productos = 
+            await consulta
+                .Select(producto => new
+                {
+                    producto.Id,
+                    producto.Producto,
+                    producto.Precio,
+                    producto.Descripcion,
+                    producto.Disponible
+                })
+                .ToListAsync();
+
+            // Crear un archivo de Excel
+            using (var excel = new ExcelPackage())
+            {
+                var workSheet = excel.Workbook.Worksheets.Add("Productos");
+                
+                // Cargar los datos en la hoja de Excel
+                workSheet.Cells.LoadFromCollection(productos, true);
+
+                // Convertir el archivo de Excel en bytes
+                var excelBytes = excel.GetAsByteArray();
+
+                // Devolver el archivo de Excel como un FileContentResult
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Productos.xlsx");
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> saveInformation([FromBody] ProductosDTO productos)
         {

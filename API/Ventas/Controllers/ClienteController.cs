@@ -153,6 +153,49 @@ namespace Ventas.Controllers
             // Devolver la lista paginada de dispositivos
             return paginatedList;
         }
+        [HttpGet("exportar-excel")]
+        public async Task<IActionResult> ExportarExcel(string filtro = null)
+        {
+            // Obtener los datos
+            IQueryable<Clientes> consulta = _context.clientes;
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                consulta = consulta.Where(d => d.Nombre != null && d.Nombre.Contains(filtro) ||
+                d.Apellido != null && d.Apellido.Contains(filtro) ||
+                d.Telefono != null && d.Telefono.Contains(filtro) ||
+                d.Email != null && d.Email.Contains(filtro) ||
+                d.DNI != null && d.DNI.Contains(filtro)
+                );
+            }
+            var clientes = 
+            await consulta
+                .Select(cliente => new
+                {
+                    cliente.Id,
+                    cliente.Nombre,
+                    cliente.Apellido,
+                    cliente.Telefono,
+                    cliente.Email,
+                    cliente.DNI
+                })
+                .ToListAsync();
+
+            // Crear un archivo de Excel
+            using (var excel = new ExcelPackage())
+            {
+                var workSheet = excel.Workbook.Worksheets.Add("Clientes");
+                
+                // Cargar los datos en la hoja de Excel
+                workSheet.Cells.LoadFromCollection(clientes, true);
+
+                // Convertir el archivo de Excel en bytes
+                var excelBytes = excel.GetAsByteArray();
+
+                // Devolver el archivo de Excel como un FileContentResult
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Clientes.xlsx");
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> saveInformation([FromBody] ClientesDTO cliente)
         {

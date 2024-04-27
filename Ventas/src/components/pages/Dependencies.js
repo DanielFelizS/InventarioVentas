@@ -19,6 +19,7 @@ import EliminarCliente from './CrudPages/Clientes/EliminarCliente'
 import EliminarEmpleado from './CrudPages/Empleados/EliminarEmpleado'
 import EliminarVenta from './CrudPages/Ventas/EliminarVenta'
 import api from '../../../config'
+import saveAs from 'file-saver'
 
 export {
     Productos,
@@ -35,5 +36,6 @@ export {
     EliminarProducto, EliminarCliente, EliminarEmpleado,
     EliminarVenta,
     BtnAction, Table,
-    FormInput, api
+    FormInput, api,
+    saveAs
 }
