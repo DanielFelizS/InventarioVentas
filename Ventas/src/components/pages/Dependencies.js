@@ -14,6 +14,10 @@ import AgregarProducto from './CrudPages/Productos/AgregarProducto'
 import AgregarCliente from './CrudPages/Clientes/AgregarCliente'
 import AgregarVenta from './CrudPages/Ventas/AgregarVenta'
 import AgregarEmpleado from './CrudPages/Empleados/AgregarEmpleado'
+import EliminarProducto from './CrudPages/Productos/EliminarProducto'
+import EliminarCliente from './CrudPages/Clientes/EliminarCliente'
+import EliminarEmpleado from './CrudPages/Empleados/EliminarEmpleado'
+import EliminarVenta from './CrudPages/Ventas/EliminarVenta'
 import api from '../../../config'
 
 export {
@@ -22,14 +26,14 @@ export {
     Clientes, 
     Ventas, 
     Inicio,
-    AgregarCliente,
-    AgregarEmpleado,
-    AgregarVenta,
+    AgregarCliente, AgregarEmpleado, AgregarVenta,
     AgregarProducto,
     EditarProducto, 
     EditarCliente,
     EditarEmpleado,
     EditarVenta,
+    EliminarProducto, EliminarCliente, EliminarEmpleado,
+    EliminarVenta,
     BtnAction, Table,
     FormInput, api
 }
