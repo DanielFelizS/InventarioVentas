@@ -1,28 +1,29 @@
 import {
-  FormInput,
-  Select,
-  BtnAction,
-  InputGroup,
-  Form,
-  useState,
-  usePost
+  FormInput, Select,
+  BtnAction, InputGroup, Form,
+  useState, usePost, productosReducer,
+  useReducer, ProductosData, ProductosTypes
 } from "../Dependencies";
 
 export default function FormAgregar() {
-  const [producto, setProducto] = useState("");
-  const [precio, setPrecio] = useState(1);
-  const [disponible, setDisponible] = useState(false);
-  const [descripcion, setDescripcion] = useState("");
-  const { AgregarDatos, handleNavigate } = usePost({url: "producto", urlRuta: "productos"});
 
-  const AgregarProducto = async () => {
-    const datos = {
-      producto: producto,
-      precio: precio,
-      descripcion: descripcion,
+  const [disponible, setDisponible] = useState()
+  const [state, dispatch] = useReducer(productosReducer, ProductosData)
+
+  const handleChange = (e) => {
+    dispatch({ type:ProductosTypes.CHANGE_INPUT, payload:{name:e.target.name, value:e.target.value} })
+  }
+  
+  const { AgregarProducto, handleNavigate } = usePost({urlRuta: "productos"});
+
+  const AgregarProductos = async () => {
+    const productosDatos = {
+      producto: state.producto,
+      precio: state.precio,
+      descripcion: state.descripcion,
       disponible: disponible,
     };
-    AgregarDatos(datos)
+    AgregarProducto(productosDatos)
   };
 
   return (
@@ -35,15 +36,15 @@ export default function FormAgregar() {
               InputType="text"
               InputPlaceholder="Jamón"
               InputName="producto"
-              Inputvalue={producto}
-              InputChange={(e) => setProducto(e.target.value)}
+              Inputvalue={state.producto}
+              InputChange={handleChange}
             />
             <FormInput
               InputType="text"
               InputPlaceholder="Íberico Gr."
-              InputName="descripicion"
-              Inputvalue={descripcion}
-              InputChange={(e) => setDescripcion(e.target.value)}
+              InputName="descripcion"
+              Inputvalue={state.descripcion}
+              InputChange={handleChange}
             />
           </InputGroup>
 
@@ -52,8 +53,8 @@ export default function FormAgregar() {
             InputType="number"
             InputPlaceholder="100 US$"
             InputName="precio"
-            Inputvalue={precio}
-            InputChange={(e) => setPrecio(e.target.value)}
+            Inputvalue={state.precio}
+            InputChange={handleChange}
           />
           <Select
             SelectLabel="Disponible: "
@@ -70,7 +71,7 @@ export default function FormAgregar() {
         </Form.Group>
         <BtnAction
           btnColor="primary"
-          btnClick={AgregarProducto}
+          btnClick={AgregarProductos}
           btnContent="Agregar"
         />
         <BtnAction btnColor="danger" btnClick={handleNavigate} btnContent="Cancelar" />

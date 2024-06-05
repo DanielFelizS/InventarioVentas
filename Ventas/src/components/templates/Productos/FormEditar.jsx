@@ -1,17 +1,22 @@
+import useGetById from "../../hooks/useGetById";
 import {
   FormInput,
   Select,
   BtnAction,
   InputGroup,
   Form,
-  api,
+  // api,
   useState,
   useEffect,
   usePut,
   useParams,
+  // useReducer,
+  // productosReducer,
+  // ProductosData,
 } from "../Dependencies";
 
 export default function FormEditar() {
+  // const [state, dispatch] = useReducer(productosReducer, ProductosData)
   const [edit, setEdit] = useState({
     producto: "",
     precio: 0,
@@ -25,30 +30,29 @@ export default function FormEditar() {
   });
 
   const { id } = useParams();
+  const { productos } = useGetById({url: "producto", id: id})
 
   useEffect(() => {
     obtenerDatos();
-  }, []);
+  }, [productos]);
 
   const obtenerDatos = async () => {
-    try {
-      const response = await api.get(`/producto/${id}`);
-      //   const fechaModificacion = response.data.disponible.toString();
-      setEdit({
-        ...response.data,
-        //   fecha_modificacion: fechaModificacion,
-      });
-    } catch (error) {
-      setError("Error al consultarse los datos");
-      console.error(error);
-    }
+    setEdit({...productos});
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEdit((prevEdit) => ({
       ...prevEdit,
-      [name]: value,
+      [name]: value
+    }));
+  };
+
+  const handleSelectChange = (e) => {
+    const select = e.target.value;
+    setEdit((prevState) => ({
+      ...prevState,
+      disponible: select,
     }));
   };
 
@@ -68,7 +72,7 @@ export default function FormEditar() {
             <FormInput
               InputType="text"
               InputPlaceholder="Íberico Gr."
-              InputName="descripicion"
+              InputName="descripcion"
               Inputvalue={edit.descripcion}
               InputChange={handleInputChange}
             />
@@ -86,7 +90,7 @@ export default function FormEditar() {
             SelectLabel="Disponible: "
             OptionLabel="Todavía hay productos"
             SelectValue={edit.disponible}
-            SelectChange={handleInputChange}
+            SelectChange={handleSelectChange}
             Options={
               <>
                 <option value="true">Si</option>

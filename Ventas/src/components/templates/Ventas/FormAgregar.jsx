@@ -4,29 +4,36 @@ import {
   BtnAction,
   InputGroup,
   Form,
-  useState,
   usePost,
-  useGet
+  useGet,
+  useReducer,
+  VentasTypes, ventasReducer, VentasDatos
 } from "../Dependencies";
 
 export default function FormAgregar() {
-  const [productoId, setProductoId] = useState();
-  const [empleadoId, setEmpleadoId] = useState();
-  const [clienteId, setClienteId] = useState();
-  const [cantidad, setCantidad] = useState(1);
-  const { AgregarDatos, handleNavigate } = usePost({url: "ventas", urlRuta: "ventas"});
+
+  const [state, dispatch] = useReducer(ventasReducer, VentasDatos)
+  const { AgregarVenta, handleNavigate } = usePost({urlRuta: "ventas"});
   const { empleado } = useGet({ url: `/empleado/all`});
   const { cliente } = useGet({ url: `/cliente/all`});
   const { productos } = useGet({ url: `/producto/all`});
 
-  const AgregarVenta = async () => {
-    const datos = {
-      productoId: productoId,
-      empleadoId: empleadoId,
-      clienteId: clienteId,
-      cantidad: cantidad,
+  const AgregarVentas = async () => {
+    const ventaDatos = {
+      productoId: state.productoId,
+      empleadoId: state.empleadoId,
+      clienteId: state.clienteId,
+      cantidad: state.cantidad,
     };
-    AgregarDatos(datos)
+    AgregarVenta(ventaDatos)
+  };
+
+  // const handleChange = (e)=>{
+  //   dispatch({ type:VentasTypes.CHANGE_INPUT, payload:{name:e.target.name, value:e.target.value} })
+  // }
+
+  const handleChange = (e, selectName) => {
+    dispatch({ type: VentasTypes.CHANGE_INPUT, payload: { name: selectName, value: e.target.value } });
   };
 
   return (
@@ -36,8 +43,8 @@ export default function FormAgregar() {
           <Form.Label>Producto: </Form.Label>
           <Select
             OptionLabel="Producto"
-            SelectValue={productoId}
-            SelectChange={(e) => setProductoId(e.target.value)}
+            SelectValue={state.productoId}
+            SelectChange={(e) => handleChange(e, 'productoId')}
             Options={
               <>
                 {productos.map((producto) => (
@@ -53,8 +60,8 @@ export default function FormAgregar() {
           <InputGroup>
             <Select
               OptionLabel="Nombre y apellido del empleado"
-              SelectValue={empleadoId}
-              SelectChange={(e) => setEmpleadoId(e.target.value)}
+              SelectValue={state.empleadoId}
+              SelectChange={(e) => handleChange(e, 'empleadoId')}
               Options={
                 <>
                   {empleado.map((empleado) => (
@@ -67,8 +74,8 @@ export default function FormAgregar() {
             />
             <Select
               OptionLabel="Nombre y apellido del cliente"
-              SelectValue={clienteId}
-              SelectChange={(e) => setClienteId(e.target.value)}
+              SelectValue={state.clienteId}
+              SelectChange={(e) => handleChange(e, 'clienteId')}
               Options={
                 <>
                   {cliente.map((client) => (
@@ -86,16 +93,12 @@ export default function FormAgregar() {
             InputType="number"
             InputPlaceholder="1"
             InputName="cantidad"
-            Inputvalue={cantidad}
-            InputChange={(e) => setCantidad(e.target.value)}
+            Inputvalue={state.cantidad}
+            InputChange={(e) => handleChange(e, 'cantidad')}
           />
         </Form.Group>
 
-        <BtnAction
-          btnColor="primary"
-          btnClick={AgregarVenta}
-          btnContent="Agregar"
-        />
+        <BtnAction btnColor="primary" btnClick={AgregarVentas} btnContent="Agregar"/>
         <BtnAction btnColor="danger" btnClick={handleNavigate} btnContent="Cancelar" />
       </Form>
     </>

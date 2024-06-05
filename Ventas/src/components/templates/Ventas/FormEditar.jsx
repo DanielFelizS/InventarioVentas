@@ -1,10 +1,10 @@
+import useGetById from "../../hooks/useGetById";
 import {
   FormInput,
   Select,
   BtnAction,
   InputGroup,
   Form,
-  api,
   useState,
   useEffect,
   usePut,
@@ -20,7 +20,6 @@ export default function FormEditar() {
     clienteId: 0,
     cantidad: 0,
   });
-
   const { editarDatos, handleNavigate } = usePut({
     url: "venta",
     PropEdit: edit,
@@ -30,20 +29,16 @@ export default function FormEditar() {
   const { cliente } = useGet({ url: `/cliente/all` });
   const { productos } = useGet({ url: `/producto/all` });
   const { id } = useParams();
+  const { ventas } = useGetById({ url: "ventas", id: id });
 
   useEffect(() => {
     obtenerDatos();
-  }, []);
+  }, [ventas]);
 
   const obtenerDatos = async () => {
-    try {
-      const response = await api.get(`/ventas/${id}`);
-      setEdit({
-        ...response.data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    setEdit({
+      ...ventas
+    });
   };
 
   const handleInputChange = (e) => {

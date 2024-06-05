@@ -1,31 +1,31 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import api from "../../../config";
+import {
+  useNavigate, useParams, api,
+  crudReducer, CrudTypes, useReducer,
+  INITIAL_STATE,
+} from "./dependencies";
 
-export default function useDelete({url, urlRuta}) {
-
-  const [data, setData] = useState("");
+export default function useDelete({ url, urlRuta }) {
+  const [state, dispatch] = useReducer(crudReducer, INITIAL_STATE);
+  const { dataDelete } = state;
   const { id } = useParams();
-  
   const navigate = useNavigate();
   const NavigateHome = () => {
     navigate(`/${urlRuta}`);
   };
 
   const eliminarDatos = async () => {
-    const response = await api.delete(`/${url}/${id}`, data);
+    await api.delete(`/${url}/${id}`, dataDelete);
     try {
-      setData("");
-      alert("Se ha eliminado el dispositivo correctamente");
+      dispatch({ type: CrudTypes.ELIMINAR_DATO, payload: "" });
+      alert("Se ha eliminado el dato correctamente");
       NavigateHome();
-    } 
-    catch(error){
+    } catch (error) {
       console.error(`Error al eliminar los datos: ${error}`);
     }
   };
 
   return {
     eliminarDatos,
-    NavigateHome
-  }
+    NavigateHome,
+  };
 }

@@ -1,3 +1,5 @@
+import { EmpleadosDatos } from "../../../reducers/empleadosReducer";
+import { empleadosReducer, EmpleadosTypes } from "../../hooks/dependencies";
 import {
   FormInput,
   Select,
@@ -5,39 +7,35 @@ import {
   InputGroup,
   Form,
   useState,
-  usePost
+  usePost,
+  useReducer
 } from "../Dependencies";
 
 export default function FormAgregar() {
+  const [state, dispatch] = useReducer(empleadosReducer, EmpleadosDatos)
+  const [sexo, setSexo] = useState("")
 
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [sexo, setSexo] = useState("");
-  const [edad, setEdad] = useState(18);
-  const [telefono, setTelefono] = useState("");
-  const [email, setEmail] = useState("");
-  const [dni, setDni] = useState("");
-  const [sueldo, setSueldo] = useState(1000);
-  const [cargo, setCargo] = useState("");
-  const [fechaNacimiento, setFechaNacimiento] = useState("");
-  const [fechaContratacion, setFechaContratacion] = useState("");
-  const { AgregarDatos, handleNavigate } = usePost({url: "empleado", urlRuta: "empleados"});
+  const { AgregarEmpleado, handleNavigate } = usePost({urlRuta: "empleados"});
 
   const AgregarEmpleados = async () => {
-    const datos = {
-      nombre: nombre,
-      apellido: apellido,
+    const empleadoDatos = {
+      nombre: state.nombre,
+      apellido: state.apellido,
       sexo: sexo,
-      edad: edad,
-      telefono: telefono,
-      email: email,
-      dni: dni,
-      sueldo: sueldo,
-      cargo: cargo,
-      fechaNacimiento: fechaNacimiento,
-      fechaContratacion: fechaContratacion
+      edad: state.edad,
+      telefono: state.telefono,
+      email: state.email,
+      dni: state.dni,
+      sueldo: state.sueldo,
+      cargo: state.cargo,
+      fechaNacimiento: state.fechaNacimiento,
+      fechaContratacion: state.fechaContratacion
     }
-    AgregarDatos(datos)
+    AgregarEmpleado(empleadoDatos)
+  }
+
+  const handleChange = (e) => {
+    dispatch({ type:EmpleadosTypes.CHANGE_INPUT, payload:{name:e.target.name, value:e.target.value} })
   }
 
   return (
@@ -51,16 +49,16 @@ export default function FormAgregar() {
               InputType="text"
               InputPlaceholder="Juan"
               InputName="nombre"
-              Inputvalue={nombre}
-              InputChange={(e)=> setNombre(e.target.value)}
+              Inputvalue={state.nombre}
+              InputChange={handleChange}
             />
             <FormInput
               InputTitle=""
               InputType="text"
               InputPlaceholder="Perez"
               InputName="apellido"
-              Inputvalue={apellido}
-              InputChange={(e)=> setApellido(e.target.value)}
+              Inputvalue={state.apellido}
+              InputChange={handleChange}
             />
           </InputGroup>
 
@@ -82,8 +80,8 @@ export default function FormAgregar() {
               InputType="number"
               InputPlaceholder="18"
               InputName="Edad"
-              Inputvalue={edad}
-              InputChange={(e)=> setEdad(e.target.value)}
+              Inputvalue={state.edad}
+              InputChange={handleChange}
             />
           </InputGroup>
 
@@ -94,16 +92,16 @@ export default function FormAgregar() {
               InputType="text"
               InputPlaceholder="+1 (123) 4567 890"
               InputName="telefono"
-              Inputvalue={telefono}
-              InputChange={(e)=> setTelefono(e.target.value)}
+              Inputvalue={state.telefono}
+              InputChange={handleChange}
             />
             <FormInput
               InputTitle=""
               InputType="email"
               InputPlaceholder="juanperez@correo.com"
               InputName="email"
-              Inputvalue={email}
-              InputChange={(e)=> setEmail(e.target.value)}
+              Inputvalue={state.email}
+              InputChange={handleChange}
             />
           </InputGroup>
 
@@ -112,24 +110,24 @@ export default function FormAgregar() {
             InputType="text"
             InputPlaceholder="1-2334454665767-809"
             InputName="dni"
-            Inputvalue={dni}
-            InputChange={(e)=> setDni(e.target.value)}
+            Inputvalue={state.dni}
+            InputChange={handleChange}
           />
           <FormInput
             InputTitle="Sueldo: "
             InputType="number"
             InputPlaceholder="50,000"
             InputName="sueldo"
-            Inputvalue={sueldo}
-            InputChange={(e)=> setSueldo(e.target.value)}
+            Inputvalue={state.sueldo}
+            InputChange={handleChange}
           />
           <FormInput
             InputTitle="Cargo: "
             InputType="text"
             InputPlaceholder="Conserje"
             InputName="cargo"
-            Inputvalue={cargo}
-            InputChange={(e)=> setCargo(e.target.value)}
+            Inputvalue={state.cargo}
+            InputChange={handleChange}
           />
           <Form.Label>Fecha de nacimiento y fecha de contratación: </Form.Label>
           <InputGroup>
@@ -138,16 +136,16 @@ export default function FormAgregar() {
               InputType="date"
               InputPlaceholder=""
               InputName="fechaNacimiento"
-              Inputvalue={fechaNacimiento}
-              InputChange={(e)=> setFechaNacimiento(e.target.value)}
+              Inputvalue={state.fechaNacimiento}
+              InputChange={handleChange}
             />
             <FormInput
               InputTitle=""
               InputType="date"
               InputPlaceholder=""
               InputName="fechaContratacion"
-              Inputvalue={fechaContratacion}
-              InputChange={(e)=> setFechaContratacion(e.target.value)}
+              Inputvalue={state.fechaContratacion}
+              InputChange={handleChange}
             />
           </InputGroup>
         </Form.Group>

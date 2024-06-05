@@ -1,10 +1,11 @@
+import useGetById from "../../hooks/useGetById";
 import {
     FormInput,
     Select,
     BtnAction,
     InputGroup,
     Form,
-    api,
+    // api,
     useState,
     useEffect,
     usePut,
@@ -12,39 +13,39 @@ import {
   } from "../Dependencies";
   
   export default function FormEditar() {
-    const  [edit, setEdit] = useState({
-        nombre: "",
-        apellido: "",
-        sexo: "",
-        edad: 0,
-        telefono: "",
-        email: "",
-        dni: "",
-        sueldo: 0,
-        cargo: "",
-        fechaNacimiento: "",
-        fechaContratacion: ""
-    })
-
-    const { editarDatos, handleNavigate } = usePut({ url: "empleado", PropEdit: edit, urlRuta: "empleados"})
     const { id } = useParams();
+    const { empleado } = useGetById({url: "empleado", id: id})
+    const [edit, setEdit] = useState({
+      nombre: "",
+      apellido: "",
+      sexo: "",
+      edad: 0,
+      telefono: "",
+      email: "",
+      dni: "",
+      sueldo: 0,
+      cargo: "",
+      fechaNacimiento: "",
+      fechaContratacion: ""
+  })
+  const { editarDatos, handleNavigate } = usePut({ url: "empleado", PropEdit: edit, urlRuta: "empleados"})
 
     useEffect(() => {
       obtenerDatos();
-    }, []);
+    }, [empleado]);
   
     const obtenerDatos = async () => {
       try {
-        const response = await api.get(`/empleado/${id}`);
-        const fechaNacimiento = response.data.fechaNacimiento.substring(0, 10); 
-        const fechaContratacion = response.data.fechaContratacion.substring(0, 10); 
+        // empleado;
+        const fechaNacimiento = empleado.fechaNacimiento.substring(0, 10); 
+        const fechaContratacion = empleado.fechaContratacion.substring(0, 10); 
         setEdit({
-        ...response.data,
+        ...empleado,
         fechaNacimiento: fechaNacimiento,
         fechaContratacion: fechaContratacion
       })
       } catch (error) {
-        setError("Error al consultarse los datos");
+        // setError("Error al consultarse los datos");
         console.error(error);
       }
     };

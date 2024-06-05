@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import BtnAction from '../../atoms/Button/Button'
 import Modal from "react-bootstrap/Modal";
 import useDelete from "../../hooks/useDelete";

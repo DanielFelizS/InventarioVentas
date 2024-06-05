@@ -1,0 +1,6 @@
+export const CrudTypes = {
+    AGREGAR_DATO: "AGREGAR_DATO",
+    ELIMINAR_DATO: "ELIMINAR_DATO",
+    EDITAR_DATO: "EDITAR_DATO",
+    ERROR: "ERROR"
+}
