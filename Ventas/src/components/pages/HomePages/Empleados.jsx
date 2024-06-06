@@ -1,30 +1,8 @@
-import { Table, BtnAction, FormInput, saveAs } from "../Dependencies";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from '../../../../config'
-import Navigation from "../../molecules/Navbar/Navbar";
+import { Table, BtnAction, FormInput,useSearch, useExport, useNavigate } from "../Dependencies";
 
 export default function Empleados () {
-  const [search, setSearch] = useState('');
-  const [msg, setMsg] = useState("");
-
-  const handleChangeSearch = (e)=>{
-    setSearch(e.target.value);
-  }
-
-  const ExportarExcel = async () => {
-      setMsg("Generando excel...");
-      try {
-        const response = await api.get(`/empleado/exportar-excel?filtro=${search}`, { responseType: 'blob' });
-        const blob = new Blob([response.data], { type: 'application/xlsx' });
-        saveAs(blob, 'Empleados.xlsx');
-        setMsg("Descarga exitosa");
-
-      } catch (error) {
-        setMsg("La exportación del excel ha fallado");
-        console.error(error);
-      }
-  }
+  const {search, handleChangeSearch } = useSearch();
+  const {ExportarExcel, msg } = useExport({ url: "empleado", search: search, fileName: "Empleados" })
 
   const navigate = useNavigate();
   const handleNavigate = () => {
@@ -36,10 +14,8 @@ export default function Empleados () {
 
   return (
     <>
-      <Navigation />
 
       <div className='btn-Agregar'>
-
       <FormInput value={search} InputChange={handleChangeSearch} InputType='text' InputPlaceholder="Buscar" />
       <BtnAction btnColor='primary' btnClick={handleNavigate} btnContent='Agregar Empleado'/> 
       </div>

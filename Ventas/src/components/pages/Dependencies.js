@@ -19,7 +19,10 @@ import EliminarCliente from './CrudPages/Clientes/EliminarCliente'
 import EliminarEmpleado from './CrudPages/Empleados/EliminarEmpleado'
 import EliminarVenta from './CrudPages/Ventas/EliminarVenta'
 import api from '../../../config'
-import saveAs from 'file-saver'
+import useSearch from '../hooks/useSearch'
+import useExport from "../hooks/useExport";
+import { useNavigate } from "react-router-dom";
+
 
 export {
     Productos,
@@ -36,6 +39,6 @@ export {
     EliminarProducto, EliminarCliente, EliminarEmpleado,
     EliminarVenta,
     BtnAction, Table,
-    FormInput, api,
-    saveAs
+    FormInput, api, useNavigate,
+    useSearch, useExport
 }

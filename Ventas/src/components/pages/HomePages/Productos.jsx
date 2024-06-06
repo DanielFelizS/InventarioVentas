@@ -1,31 +1,8 @@
-import { Table, BtnAction, FormInput, saveAs } from "../Dependencies";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from '../../../../config'
-import Navigation from "../../molecules/Navbar/Navbar";
+import { Table, BtnAction, FormInput,useSearch, useExport, useNavigate } from "../Dependencies";
 
 export default function Productos() {
-  const [search, setSearch] = useState('');
-  const [msg, setMsg] = useState("");
-
-  const handleChangeSearch = (e)=>{
-    setSearch(e.target.value);
-  }
-    
-  const ExportarExcel = async () => {
-      setMsg("Generando excel...");
-      try {
-        const response = await api.get(`/producto/exportar-excel?filtro=${search}`, { responseType: 'blob' });
-        const blob = new Blob([response.data], { type: 'application/xlsx' });
-        saveAs(blob, 'Productos.xlsx');
-        setMsg("Descarga exitosa");
-
-      } catch (error) {
-        setMsg("La exportación del excel ha fallado");
-        console.error(error);
-      }
-  }
-
+  const {search, handleChangeSearch } = useSearch();
+  const {ExportarExcel, msg } = useExport({ url: "producto", search: search, fileName: "Productos" })
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("/agregar_producto");
@@ -34,9 +11,7 @@ export default function Productos() {
   const Headers = ['ID', 'Producto', 'Descripción', 'Precio', 'Disponible'];
 
   return (
-    <>
-      <Navigation />
-      
+    <>      
       <div className='btn-Agregar'>
 
       <FormInput value={search} InputChange={handleChangeSearch} InputType='text' InputPlaceholder="Buscar" />
