@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using Ventas.Models;
 using Ventas.DTOs;
 using Ventas.Data;
+using Ventas.Interfaces;
+// using Ventas.Repositories;
 using AutoMapper;
 using QuestPDF.Fluent;
 using OfficeOpenXml;
@@ -17,246 +19,127 @@ namespace Ventas.Controllers
     [Route("ventas")]
     public class VentasController : Controller
     {
-        private readonly ILogger<VentasController> _logger;
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
+        public readonly IVentasRepository _ventasRepository;
 
-        public VentasController(ILogger<VentasController> logger, DataContext context, IMapper mapper)
+        public VentasController(IVentasRepository ventasRepository)
         {
-            _logger = logger;
-            _context = context;
-            _mapper = mapper;
+            _ventasRepository = ventasRepository;
         }
         [HttpGet(Name = "ConsultarVentas")]
         public async Task<ActionResult<PaginatedList<VentaDTO>>> ConsultarVentas(int id, int pageNumber = 1, int pageSize = 6)
         {
-            var paginatedVentas = await (from ventas in _context.ventas
-                join productos in _context.productos on ventas.ProductoId equals productos.Id
-                join empleados in _context.empleados on ventas.EmpleadoId equals empleados.Id
-                join clientes in _context.clientes on ventas.ClienteId equals clientes.Id
+            var result = await _ventasRepository.ConsultarVentas(id, pageNumber, pageSize);
 
-                select new VentaDTO
-                {
-                    Id = ventas.Id,
-                    nombre_producto = productos.Producto,
-                    precio_producto = productos.Precio,
-                    nombre_empleado = empleados.Nombre,
-                    nombre_cliente = clientes.Nombre,
-                    Cantidad = ventas.Cantidad,
-                    Fecha_venta = ventas.Fecha_venta,
-                    Total = ventas.Total,
-                    ITBIS = ventas.ITBIS
-                })
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            var totalCount = await _context.ventas.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-
-            var paginatedList = new PaginatedList<VentaDTO>
+            if (result != null && result.Value != null)
             {
-                TotalCount = totalCount,
-                PageIndex = pageNumber,
-                PageSize = pageSize,
-                TotalPages = totalPages,
-                Items = paginatedVentas
-            };
+                var totalCount = result.Value.TotalCount;
 
-            // Agrega el encabezado 'X-Total-Count' a la respuesta
-            Response.Headers["X-Total-Count"] = totalCount.ToString();
-            // Exponer el encabezado 'X-Total-Count'
-            Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
+                // Agregamos el encabezado 'X-Total-Count' a la respuesta
+                Response.Headers["X-Total-Count"] = totalCount.ToString();
+                // Exponer el encabezado 'X-Total-Count'
+                Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
 
-            return paginatedList;
+                return Ok(result.Value.Items);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
         [HttpGet("{id}", Name = "VentaPorId")]
         public async Task<ActionResult<VentaDTO>> VentaPorId(int id)
         {
-            var venta = await _context.ventas
-                .Include(d => d.productos)
-                .Include(d => d.empleados)
-                .Include(d => d.clientes)
-                .FirstOrDefaultAsync(d => d.Id == id);
+            var venta = await _ventasRepository.VentaPorId(id);
 
             if (venta == null)
             {
                 return NotFound();
             }
 
-            // Mapear el cliente a un DTO que incluya el nombre del departamento
-            var ventaDTO = new VentaDTO
-            {
-                Id = venta.Id,
-                nombre_producto = venta.productos.Producto,
-                precio_producto = venta.productos.Precio,
-                nombre_empleado = venta.empleados.Nombre,
-                nombre_cliente = venta.clientes.Nombre,
-                Cantidad = venta.Cantidad,
-                Fecha_venta = venta.Fecha_venta,
-                Total = venta.Total,
-                ITBIS = venta.ITBIS
-            };
-
-            return ventaDTO;
+            return venta;
         }
         [HttpGet("buscar")]
-        public async Task<ActionResult<PaginatedList<VentaDTO>>> Buscar(int id, int pageNumber = 1, int pageSize = 6, string buscar = null)
+        public async Task<ActionResult<PaginatedList<VentaDTO>>> BuscarVenta(int id, int pageNumber = 1, int pageSize = 6, string buscar = null)
         {
-            var consulta = _context.ventas.AsQueryable();
+            var consulta = await _ventasRepository.BuscarVenta(id, pageNumber, pageSize, buscar);              
 
-            if (!string.IsNullOrEmpty(buscar))
-            {
-                consulta = consulta.Where(d => d.productos.Producto != null && d.productos.Producto.Contains(buscar) ||
-                d.productos.Precio.ToString() != null && d.productos.Precio.ToString().Contains(buscar) ||
-                d.empleados.Nombre != null && d.empleados.Nombre.Contains(buscar) ||
-                d.clientes.Nombre != null && d.clientes.Nombre.Contains(buscar) ||
-                d.Fecha_venta.ToString() != null && d.Fecha_venta.ToString().Contains(buscar));
-            }
-
-            // Obtener las ventas paginadas
-            var paginacionVentas = await consulta
-                .Select(ventas => new VentaDTO
-                {
-                    Id = ventas.Id,
-                    nombre_producto = ventas.productos.Producto,
-                    precio_producto = ventas.productos.Precio,
-                    nombre_empleado = ventas.empleados.Nombre,
-                    nombre_cliente = ventas.clientes.Nombre,
-                    Cantidad = ventas.Cantidad,
-                    Fecha_venta = ventas.Fecha_venta,
-                    Total = ventas.Total,
-                    ITBIS = ventas.ITBIS
-                })
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            var totalCount = await consulta.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-
-            var ventasDto = paginacionVentas.Select(d =>
-            {
-                var ventaDto = _mapper.Map<VentaDTO>(d);
-                ventaDto.nombre_empleado = d.nombre_empleado;
-                ventaDto.nombre_cliente = d.nombre_cliente;
-                ventaDto.nombre_producto = d.nombre_producto;
-                ventaDto.precio_producto = d.precio_producto;
-
-                return ventaDto;
-            }).ToList();
-
-            var paginatedList = new PaginatedList<VentaDTO>
-            {
-                Items = ventasDto,
-                TotalCount = totalCount,
-                PageIndex = pageNumber,
-                PageSize = pageSize,
-                TotalPages = totalPages
-            };
-
-            // Agrega el encabezado 'X-Total-Count' a la respuesta
+            if (consulta != null && consulta.Value != null) {
+            var totalCount = consulta.Value.TotalCount;
+            // Agregamos el encabezado 'X-Total-Count' a la respuesta
             Response.Headers["X-Total-Count"] = totalCount.ToString();
             // Exponer el encabezado 'X-Total-Count'
             Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
-
-            return paginatedList;
-        }
-        [HttpGet("exportar-excel")]
-        public async Task<IActionResult> ExportarExcel(string filtro = null)
-        {
-            // Obtener los datos
-            IQueryable<Venta> consulta = _context.ventas
-            .Include(d => d.empleados)
-            .Include(d => d.clientes)
-            .Include(d => d.productos);
-
-            if (!string.IsNullOrEmpty(filtro))
-            {
-                consulta = consulta.Where(d => d.productos.Producto != null && d.productos.Producto.Contains(filtro) ||
-                d.productos.Precio.ToString() != null && d.productos.Precio.ToString().Contains(filtro) ||
-                d.empleados.Nombre != null && d.empleados.Nombre.Contains(filtro) ||
-                d.clientes.Nombre != null && d.clientes.Nombre.Contains(filtro) ||
-                d.Fecha_venta.ToString() != null && d.Fecha_venta.ToString().Contains(filtro));
+            return Ok(consulta.Value.Items);
             }
-            var ventas = 
-            await consulta
-                .Select(venta => new
-                {
-                    venta.Id,
-                    Nombre_producto = venta.productos.Producto,
-                    Precio_producto = venta.productos.Precio,
-                    Nombre_empleado = venta.empleados.Nombre,
-                    Nombre_cliente = venta.clientes.Nombre,
-                    venta.Cantidad,
-                    venta.Fecha_venta,
-                    venta.Total,
-                    venta.ITBIS
-                })
-                .ToListAsync();
+            else{
+                return NotFound();
+            }
+        }
+        // [HttpGet("exportar-excel")]
+        // public async Task<IActionResult> ExportarExcel(string filtro = null)
+        // {
+        //     // Obtener los datos
+        //     IQueryable<Venta> consulta = _context.ventas
+        //     .Include(d => d.empleados)
+        //     .Include(d => d.clientes)
+        //     .Include(d => d.productos);
 
-            // Crear un archivo de Excel
-            using (var excel = new ExcelPackage())
-            {
-                var workSheet = excel.Workbook.Worksheets.Add("Ventas");
+        //     if (!string.IsNullOrEmpty(filtro))
+        //     {
+        //         consulta = consulta.Where(d => d.productos.Producto != null && d.productos.Producto.Contains(filtro) ||
+        //         d.productos.Precio.ToString() != null && d.productos.Precio.ToString().Contains(filtro) ||
+        //         d.empleados.Nombre != null && d.empleados.Nombre.Contains(filtro) ||
+        //         d.clientes.Nombre != null && d.clientes.Nombre.Contains(filtro) ||
+        //         d.Fecha_venta.ToString() != null && d.Fecha_venta.ToString().Contains(filtro));
+        //     }
+        //     var ventas = 
+        //     await consulta
+        //         .Select(venta => new
+        //         {
+        //             venta.Id,
+        //             Nombre_producto = venta.productos.Producto,
+        //             Precio_producto = venta.productos.Precio,
+        //             Nombre_empleado = venta.empleados.Nombre,
+        //             Nombre_cliente = venta.clientes.Nombre,
+        //             venta.Cantidad,
+        //             venta.Fecha_venta,
+        //             venta.Total,
+        //             venta.ITBIS
+        //         })
+        //         .ToListAsync();
+
+        //     // Crear un archivo de Excel
+        //     using (var excel = new ExcelPackage())
+        //     {
+        //         var workSheet = excel.Workbook.Worksheets.Add("Ventas");
                 
-                // Cargar los datos en la hoja de Excel
-                workSheet.Cells.LoadFromCollection(ventas, true);
+        //         // Cargar los datos en la hoja de Excel
+        //         workSheet.Cells.LoadFromCollection(ventas, true);
 
-                // Convertir el archivo de Excel en bytes
-                var excelBytes = excel.GetAsByteArray();
+        //         // Convertir el archivo de Excel en bytes
+        //         var excelBytes = excel.GetAsByteArray();
 
-                // Devolver el archivo de Excel como un FileContentResult
-                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ventas.xlsx");
-            }
-        }
+        //         // Devolver el archivo de Excel como un FileContentResult
+        //         return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ventas.xlsx");
+        //     }
+        // }
         [HttpPost]
-        public async Task<IActionResult> saveInformation([FromBody] VentaCreateDTO venta)
+        public async Task<IActionResult> AgregarVenta([FromBody] VentaCreateDTO venta)
         {
             if (ModelState.IsValid)
             {
-                // Mapear el DTO a una entidad Venta
-                Venta AddVenta = _mapper.Map<Venta>(venta);
-
-                // Calcular el total y el ITBIS
-                double Precio = await _context.productos
-                    .Where(p => p.Id == venta.ProductoId)
-                    .Select(p => p.Precio)
-                    .FirstOrDefaultAsync();
-
-                double total = venta.Cantidad * Precio;
-                double itbis = total * 0.18;
-
-                // Asignar el total e ITBIS a la entidad Venta
-                AddVenta.Total = total;
-                AddVenta.ITBIS = itbis;
-
-                // Agregar la venta a la base de datos
-                _context.ventas.Add(AddVenta);
-                await _context.SaveChangesAsync();
-
-                // Crear un DTO VentaDTO para devolver como respuesta
-                VentaDTO ventaDTO = new VentaDTO
-                {
-                    Id = AddVenta.Id,
-                    ProductoId = AddVenta.ProductoId,
-                    EmpleadoId = AddVenta.EmpleadoId,
-                    ClienteId = AddVenta.ClienteId,
-                    Cantidad = AddVenta.Cantidad,
-                    Fecha_venta = AddVenta.Fecha_venta,
-                    Total = total,
-                    ITBIS = itbis
-                };
-
-                // Devolver una respuesta con el DTO VentaDTO
-                return Ok(ventaDTO);
+                var result = await _ventasRepository.AgregarVenta(venta);
+                // return CreatedAtRoute("ConsultarVentas", new { id = venta.Id }, venta);
+                return result;
+                
             }
-
             return BadRequest(ModelState);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] VentaDTO venta)
+        public async Task<IActionResult> EditarVenta(int id, [FromBody] VentaDTO venta)
         {
+            await _ventasRepository.EditarVenta(id, venta);
+
             if (id != venta?.Id)
             {
                 return BadRequest("No se encontró el ID");
@@ -267,23 +150,17 @@ namespace Ventas.Controllers
                 return BadRequest(ModelState);
             }
 
-                Venta newVenta = _mapper.Map<Venta>(venta);
-                _context.Update(newVenta);
-                await _context.SaveChangesAsync();
-                return Ok("Se actualizó correctamente");
+            return Ok("Se actualizó correctamente");
         }
         [HttpDelete("{id}")] 
-        public async Task<ActionResult<Venta>> Delete(int id)
+        public async Task<ActionResult<Venta>> EliminarVenta(int id)
         {
             try{
-                var venta = await _context.ventas.FindAsync(id);
+                var venta = await _ventasRepository.EliminarVenta(id);
                 if (venta == null)
                 {
                     return NotFound();
                 }
-
-                _context.ventas.Remove(venta);
-                await _context.SaveChangesAsync();
 
                 return venta;
             } catch (Exception ex) {

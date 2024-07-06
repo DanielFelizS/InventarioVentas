@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Ventas.Models;
 using Ventas.DTOs;
 using Ventas.Data;
+using Ventas.Interfaces;
 using AutoMapper;
 using QuestPDF.Fluent;
 using OfficeOpenXml;
@@ -17,92 +18,56 @@ namespace Ventas.Controllers
     [Route("producto")]
     public class ProductoController : Controller
     {
-        private readonly ILogger<ProductoController> _logger;
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _host;
+        public readonly IProductosRepository _productosRepository;
 
-        public ProductoController(ILogger<ProductoController> logger, DataContext context, IMapper mapper,  IWebHostEnvironment host)
+        public ProductoController(IProductosRepository productosRepository)
         {
-            _logger = logger;
-            _context = context;
-            _mapper = mapper;
-            _host = host;
+            _productosRepository = productosRepository;
         }
         [HttpGet(Name = "VerProductos")]
         public async Task<ActionResult<PaginatedList<ProductosDTO>>> VerProductos(int id, int pageNumber = 1, int pageSize = 6)
         {
-            var datos = await _context.productos.FindAsync(id);
-            var Productos = await _context.productos.ToListAsync();
-            var totalCount = Productos.Count;
-            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-            // var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var producto = await _productosRepository.VerProductos(id, pageNumber, pageSize);
 
-            var PaginacionProductos = Productos.Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            var DepartamentosDTO = _mapper.Map<List<ProductosDTO>>(PaginacionProductos);
-
-            var paginatedList = new PaginatedList<ProductosDTO>
+            // Verifica que cliente tenga datos y establece el encabezado X-Total-Count
+            if (producto != null && producto.Value != null)
             {
-                Items = DepartamentosDTO,
-                TotalCount = totalCount,
-                PageIndex = pageNumber,
-                PageSize = pageSize,
-                TotalPages = totalPages
-            };
+                var totalCount = producto.Value.TotalCount;
 
-            // Agrega el encabezado 'X-Total-Count' a la respuesta
-            Response.Headers["X-Total-Count"] = totalCount.ToString();
-            // Exponer el encabezado 'X-Total-Count'
-            Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
-            
-            return paginatedList;
+                // Agregamos el encabezado 'X-Total-Count' a la respuesta
+                Response.Headers["X-Total-Count"] = totalCount.ToString();
+                // Exponer el encabezado 'X-Total-Count'
+                Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
+
+                return Ok(producto.Value.Items);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
         [HttpGet("{id}", Name = "GetProducto")]
         public async Task<ActionResult<ProductosDTO>> GetProducto(int id)
         {
-            var producto = await _context.productos
-                .FirstOrDefaultAsync(d => d.Id == id);
+            var producto = await _productosRepository.GetProducto(id);
 
             if (producto == null)
             {
                 return NotFound();
             }
+            return producto;
 
-            // Mapear el producto a un DTO que incluya el nombre del departamento
-            var productosDTO = new ProductosDTO
-            {
-                Id = producto.Id,
-                Producto = producto.Producto,
-                Precio = producto.Precio,
-                Descripcion = producto.Descripcion,
-                Disponible = producto.Disponible,
-            };
-
-            return productosDTO;
         }
         [HttpGet("all", Name = "Productos")]
         public async Task<ActionResult<IEnumerable<ProductosDTO>>> Productos()
         {
-            IQueryable<ProductosDTO> consulta = _context.productos
-                .Select(producto => new ProductosDTO
-                {
-                    Id = producto.Id,
-                    Producto = producto.Producto,
-                    Descripcion = producto.Descripcion,
-                    Precio = producto.Precio,
-                    Disponible = producto.Disponible,
-                });
-
-            var productos = await consulta.ToListAsync();
-
-            if (productos == null || productos.Count == 0)
+            var productos = await _productosRepository.Productos();
+            
+            if (productos.Value == null || !productos.Value.Any())
             {
                 return NotFound();
             }
-
-            var totalCount = await _context.productos.CountAsync();
+            var totalCount = productos.Value.Count();
             
             Response.Headers["X-Total-Count"] = totalCount.ToString();
             Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
@@ -112,101 +77,77 @@ namespace Ventas.Controllers
         [HttpGet("buscar")]
         public async Task<ActionResult<PaginatedList<ProductosDTO>>> Buscar(int id, int pageNumber = 1, int pageSize = 6, string buscar = null)
         {
-            var consulta = _context.productos.AsQueryable();
+            var consulta = await _productosRepository.Buscar(id, pageNumber, pageSize, buscar);
 
-            if (!string.IsNullOrEmpty(buscar))
-            {
-                consulta = consulta.Where(d => d.Producto != null && d.Producto.Contains(buscar) ||
-                d.Descripcion != null && d.Descripcion.Contains(buscar) ||
-                d.Precio.ToString() != null && d.Precio.ToString().Contains(buscar) ||
-                d.Disponible.ToString() != null && d.Disponible.ToString().Contains(buscar));
+            if (consulta != null && consulta.Value != null) {
+                var totalCount = consulta.Value.TotalCount;
+                // Agregamos el encabezado 'X-Total-Count' a la respuesta
+                Response.Headers["X-Total-Count"] = totalCount.ToString();
+                // Exponer el encabezado 'X-Total-Count'
+                Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
+                return Ok(consulta.Value.Items);
             }
-
-            var totalCount = await consulta.CountAsync();
-
-            // Obtener los productos paginados
-            var paginacionProductos = await consulta
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            var productosDto = _mapper.Map<List<ProductosDTO>>(paginacionProductos);
-
-            var paginatedList = new PaginatedList<ProductosDTO>
-            {
-                Items = productosDto,
-                TotalCount = totalCount,
-                PageIndex = pageNumber,
-                PageSize = pageSize,
-                TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
-            };
-
-            // Agregar el encabezado 'X-Total-Count' a la respuesta
-            Response.Headers["X-Total-Count"] = paginatedList.TotalCount.ToString();
-            // Exponer el encabezado 'X-Total-Count'
-            Response.Headers.Append("Access-Control-Expose-Headers", "X-Total-Count");
-
-            // Devolver la lista paginada de productos
-            return paginatedList;
+            else{
+                return NotFound();
+            }
         }
-        [HttpGet("exportar-excel")]
-        public async Task<IActionResult> ExportarExcel(string filtro = null)
-        {
-            // Obtener los datos
-            IQueryable<Productos> consulta = _context.productos;
+        // [HttpGet("exportar-excel")]
+        // public async Task<IActionResult> ExportarExcel(string filtro = null)
+        // {
+        //     // Obtener los datos
+        //     IQueryable<Productos> consulta = _context.productos;
 
-            if (!string.IsNullOrEmpty(filtro))
-            {
-                consulta = consulta.Where(d => d.Producto != null && d.Producto.Contains(filtro) ||
-                d.Precio.ToString() != null && d.Precio.ToString().Contains(filtro) ||
-                d.Descripcion != null && d.Descripcion.Contains(filtro) ||
-                d.Disponible.ToString() != null && d.Disponible.ToString().Contains(filtro));
-            }
-            var productos = 
-            await consulta
-                .Select(producto => new
-                {
-                    producto.Id,
-                    producto.Producto,
-                    producto.Precio,
-                    producto.Descripcion,
-                    producto.Disponible
-                })
-                .ToListAsync();
+        //     if (!string.IsNullOrEmpty(filtro))
+        //     {
+        //         consulta = consulta.Where(d => d.Producto != null && d.Producto.Contains(filtro) ||
+        //         d.Precio.ToString() != null && d.Precio.ToString().Contains(filtro) ||
+        //         d.Descripcion != null && d.Descripcion.Contains(filtro) ||
+        //         d.Disponible.ToString() != null && d.Disponible.ToString().Contains(filtro));
+        //     }
+        //     var productos = 
+        //     await consulta
+        //         .Select(producto => new
+        //         {
+        //             producto.Id,
+        //             producto.Producto,
+        //             producto.Precio,
+        //             producto.Descripcion,
+        //             producto.Disponible
+        //         })
+        //         .ToListAsync();
 
-            // Crear un archivo de Excel
-            using (var excel = new ExcelPackage())
-            {
-                var workSheet = excel.Workbook.Worksheets.Add("Productos");
+        //     // Crear un archivo de Excel
+        //     using (var excel = new ExcelPackage())
+        //     {
+        //         var workSheet = excel.Workbook.Worksheets.Add("Productos");
                 
-                // Cargar los datos en la hoja de Excel
-                workSheet.Cells.LoadFromCollection(productos, true);
+        //         // Cargar los datos en la hoja de Excel
+        //         workSheet.Cells.LoadFromCollection(productos, true);
 
-                // Convertir el archivo de Excel en bytes
-                var excelBytes = excel.GetAsByteArray();
+        //         // Convertir el archivo de Excel en bytes
+        //         var excelBytes = excel.GetAsByteArray();
 
-                // Devolver el archivo de Excel como un FileContentResult
-                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Productos.xlsx");
-            }
-        }
+        //         // Devolver el archivo de Excel como un FileContentResult
+        //         return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Productos.xlsx");
+        //     }
+        // }
         [HttpPost]
-        public async Task<IActionResult> saveInformation([FromBody] ProductosDTO productos)
+        public async Task<IActionResult> AgregarProducto([FromBody] ProductosDTO productos)
         {
             if (ModelState.IsValid)
             {
-                Productos AddProductos = _mapper.Map<Productos>(productos);
-                _context.productos.AddAsync(AddProductos);
-                await _context.SaveChangesAsync();
-
+                await _productosRepository.AgregarProducto(productos);
                 // Devolver una respuesta CreatedAtRoute con el producto creado
-                return CreatedAtRoute("ObtenerEmpleados", new { id = AddProductos.Id }, AddProductos);
+                return CreatedAtRoute("ObtenerEmpleados", new { id = productos.Id }, productos);
             }
 
             return BadRequest(ModelState);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] ProductosDTO productos)
+        public async Task<IActionResult> EditarProducto(int id, [FromBody] ProductosDTO productos)
         {
+            _productosRepository.EditarProducto(id, productos);
+
             if (id != productos?.Id)
             {
                 return BadRequest("No se encontró el ID");
@@ -217,23 +158,17 @@ namespace Ventas.Controllers
                 return BadRequest(ModelState);
             }
 
-                Productos newProduct = _mapper.Map<Productos>(productos);
-                _context.Update(newProduct);
-                await _context.SaveChangesAsync();
-                return Ok("Se actualizó correctamente");
+            return Ok("Se actualizó correctamente");
         }
         [HttpDelete("{id}")] 
-        public async Task<ActionResult<Productos>> Delete(int id)
+        public async Task<ActionResult<Productos>> EliminarProducto(int id)
         {
             try{
-                var producto = await _context.productos.FindAsync(id);
+                var producto = await _productosRepository.EliminarProducto(id);
                 if (producto == null)
                 {
                     return NotFound();
                 }
-
-                _context.productos.Remove(producto);
-                await _context.SaveChangesAsync();
 
                 return producto;
             } catch (Exception ex) {

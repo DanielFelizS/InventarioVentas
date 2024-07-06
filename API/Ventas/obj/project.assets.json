@@ -14059,11 +14059,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
+      "projectUniqueName": "C:\\Users\\A19A05048\\Desktop\\PROGRAMACION\\Proyectos\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
       "projectName": "Ventas",
-      "projectPath": "c:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
+      "projectPath": "C:\\Users\\A19A05048\\Desktop\\PROGRAMACION\\Proyectos\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
       "packagesPath": "C:\\Users\\A19A05048\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\A19A05048\\Desktop\\CRUD_Ventas\\API\\Ventas\\obj\\",
+      "outputPath": "C:\\Users\\A19A05048\\Desktop\\PROGRAMACION\\Proyectos\\CRUD_Ventas\\API\\Ventas\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\A19A05048\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -14202,7 +14202,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.104/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.106/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

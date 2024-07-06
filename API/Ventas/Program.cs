@@ -1,15 +1,18 @@
 using Ventas.Data;
+using Ventas.Repositories;
+using Ventas.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+// using Microsoft.AspNetCore.Identity;
+// using Microsoft.IdentityModel.Tokens;
+// using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Ventas.AutoMapperConfig;
 using System.Text.Json.Serialization;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
-
+// Configuración de servicios
 builder.Services
     .AddControllers()
     .AddJsonOptions(options =>
@@ -17,99 +20,25 @@ builder.Services
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-// Configuracion de DbContext
-
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-// );
-
-builder.Services.AddAutoMapper(typeof(AutoMapperConfigProfile));
+builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<IProductosRepository, ProductosRepository>();
+builder.Services.AddScoped<IVentasRepository, VentasRepository>();
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(AutoMapperConfigProfile));
 builder.Services.AddEndpointsApiExplorer();
-
-// Add Identity
-// builder.Services
-//     .AddIdentity<ApplicationUser, IdentityRole>()
-//     .AddEntityFrameworkStores<ApplicationDbContext>()
-//     .AddDefaultTokenProviders();
-
-// Config Identity
-
-// builder.Services.Configure<IdentityOptions>(options =>
-// {
-//     options.Password.RequiredLength = 8;
-//     options.Password.RequireDigit = false;
-//     options.Password.RequireLowercase = false;
-//     options.Password.RequireUppercase = false;
-//     options.Password.RequireNonAlphanumeric = false;
-//     options.SignIn.RequireConfirmedAccount = false;
-//     options.SignIn.RequireConfirmedEmail = false;
-//     options.SignIn.RequireConfirmedPhoneNumber = false;
-// });
-
-// Autenticacion
-// builder.Services
-//     .AddAuthentication(options =>
-//     {
-//         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-//         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//     })
-//     .AddJwtBearer(options =>
-//     {
-//         options.SaveToken = true;
-//         options.RequireHttpsMetadata= false;
-//         options.TokenValidationParameters = new TokenValidationParameters()
-//         {
-//             ValidateIssuer = true,
-//             ValidateAudience = true,
-//             ValidIssuer = builder.Configuration["JwtSettings:ValidIssuer"],
-//             ValidAudience = builder.Configuration["JwtSettings:ValidAudience"],
-//             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
-//         };
-//     });
-
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Please enter your token with this format: ''Bearer YOUR_TOKEN''",
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
-        BearerFormat = "JWT",
-        Scheme = "bearer"
-    });
-    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Name = "Bearer",
-                In = ParameterLocation.Header,
-                Reference = new OpenApiReference
-                {
-                    Id = "Bearer",
-                    Type = ReferenceType.SecurityScheme
-                }
-            },
-            new List<string>()
-        }
-    });
-});
-
+builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "MyPolicy", policy =>
+    options.AddPolicy("MyPolicy", policy =>
     {
         policy.WithOrigins("http://localhost:5173")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .WithHeaders("Authorization"); 
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Permitir credenciales para CORS si es necesario
     });
 });
 
@@ -123,7 +52,7 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         options.RoutePrefix = string.Empty;
-        options.DocumentTitle = "Inventario Ventas";
+        options.DocumentTitle = "API INVI";
     }
     );
 }
