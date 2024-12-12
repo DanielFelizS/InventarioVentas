@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import TableButtons from "../Table/TableButtons";
+import TableButtons from "@components/molecules/Table/TableButtons";
 
 const Search = ({
   DataFilter,

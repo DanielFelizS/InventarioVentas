@@ -1,4 +1,4 @@
-import { useState } from "./dependencies";
+import { useState } from "@hooks/dependencies";
 
 
 export default function useSearch() {

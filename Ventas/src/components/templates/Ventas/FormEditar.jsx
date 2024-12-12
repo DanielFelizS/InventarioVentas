@@ -1,4 +1,4 @@
-import useGetById from "../../hooks/useGetById";
+import useGetById from "@hooks/useGetById";
 import {
   FormInput,
   Select,
@@ -10,7 +10,7 @@ import {
   usePut,
   useGet,
   useParams,
-} from "../Dependencies";
+} from "@templates/Dependencies";
 
 export default function FormEditar() {
   const [edit, setEdit] = useState({

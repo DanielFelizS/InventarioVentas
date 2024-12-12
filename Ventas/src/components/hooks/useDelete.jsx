@@ -2,7 +2,7 @@ import {
   useNavigate, useParams, api,
   crudReducer, CrudTypes, useReducer,
   INITIAL_STATE,
-} from "./dependencies";
+} from "@hooks/dependencies";
 
 export default function useDelete({ url, urlRuta }) {
   const [state, dispatch] = useReducer(crudReducer, INITIAL_STATE);

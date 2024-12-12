@@ -1,4 +1,4 @@
-import { CrudTypes } from "../actions/CrudActions";
+import { CrudTypes } from "@/actions/CrudActions";
 export const INITIAL_STATE = {
     edit: {},
     dataDelete: [],

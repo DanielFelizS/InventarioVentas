@@ -1,4 +1,4 @@
-import { api, useNavigate, empleadosReducer, ventasReducer, useReducer, INITIAL_STATE, EmpleadosTypes, clientesReducer, ClientesTypes, productosReducer, ProductosTypes, VentasTypes} from "./dependencies"
+import { api, useNavigate, empleadosReducer, ventasReducer, useReducer, INITIAL_STATE, EmpleadosTypes, clientesReducer, ClientesTypes, productosReducer, ProductosTypes, VentasTypes} from "@hooks/dependencies"
 
 export default function usePost({ urlRuta }) {
   // const [data, setData] = useState([]);

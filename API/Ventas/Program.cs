@@ -52,7 +52,7 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         options.RoutePrefix = string.Empty;
-        options.DocumentTitle = "API INVI";
+        options.DocumentTitle = "API Ventas";
     }
     );
 }
@@ -70,3 +70,4 @@ app.UseEndpoints(endpoints =>
 app.MapSwagger().RequireAuthorization();
 app.MapControllers();
 app.Run();
+

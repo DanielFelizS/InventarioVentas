@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\A19A05048\\Desktop\\PROGRAMACION\\Proyectos\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj": {}
+    "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\A19A05048\\Desktop\\PROGRAMACION\\Proyectos\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj": {
+    "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\A19A05048\\Desktop\\PROGRAMACION\\Proyectos\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
+        "projectUniqueName": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
         "projectName": "Ventas",
-        "projectPath": "C:\\Users\\A19A05048\\Desktop\\PROGRAMACION\\Proyectos\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
-        "packagesPath": "C:\\Users\\A19A05048\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\A19A05048\\Desktop\\PROGRAMACION\\Proyectos\\CRUD_Ventas\\API\\Ventas\\obj\\",
+        "projectPath": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
+        "packagesPath": "C:\\Users\\Danie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\A19A05048\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,6 +35,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -150,7 +158,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.106/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,4 +1,4 @@
-import { EmpleadosTypes } from '../actions/Empleados'
+import { EmpleadosTypes } from '@/actions/Empleados'
 
 export const INITIAL_STATE = {
     empleado: [], 

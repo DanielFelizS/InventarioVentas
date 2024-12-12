@@ -1,5 +1,5 @@
-import { EmpleadosDatos } from "../../../reducers/empleadosReducer";
-import { empleadosReducer, EmpleadosTypes } from "../../hooks/dependencies";
+import { EmpleadosDatos } from "@reducers/empleadosReducer";
+import { empleadosReducer, EmpleadosTypes } from "@hooks/dependencies";
 import {
   FormInput,
   Select,
@@ -9,7 +9,7 @@ import {
   useState,
   usePost,
   useReducer
-} from "../Dependencies";
+} from "@templates/Dependencies";
 
 export default function FormAgregar() {
   const [state, dispatch] = useReducer(empleadosReducer, EmpleadosDatos)

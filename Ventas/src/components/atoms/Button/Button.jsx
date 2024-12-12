@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Button from "react-bootstrap/Button";
 
 export default function BtnAction({ btnColor, btnClick, btnContent }) {

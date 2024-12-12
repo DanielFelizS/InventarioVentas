@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { ProductosTypes } from '../actions/Productos'
+import { ProductosTypes } from '@/actions/Productos'
 
 export const INITIAL_STATE = {
     productos: [],

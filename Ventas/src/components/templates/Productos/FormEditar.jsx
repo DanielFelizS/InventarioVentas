@@ -1,4 +1,4 @@
-import useGetById from "../../hooks/useGetById";
+import useGetById from "@hooks/useGetById";
 import {
   FormInput,
   Select,
@@ -13,7 +13,7 @@ import {
   // useReducer,
   // productosReducer,
   // ProductosData,
-} from "../Dependencies";
+} from "@templates/Dependencies";
 
 export default function FormEditar() {
   // const [state, dispatch] = useReducer(productosReducer, ProductosData)

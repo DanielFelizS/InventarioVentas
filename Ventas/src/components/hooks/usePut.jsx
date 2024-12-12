@@ -5,7 +5,7 @@ import {
   CrudTypes,
   useReducer,
   INITIAL_STATE,
-} from "./dependencies";
+} from "@hooks/dependencies";
 
 export default function usePut({ PropEdit, url, urlRuta }) {
   const [state, dispatch] = useReducer(crudReducer, INITIAL_STATE);

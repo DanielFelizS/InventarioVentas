@@ -1,4 +1,4 @@
-import BtnAction from "../../atoms/Button/Button";
+import BtnAction from "@components/atoms/Button/Button";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
