@@ -1,48 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\dtos\\empleadosdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:dtos\\empleadosdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\repositories\\empleadorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:repositories\\empleadorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\models\\productos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:models\\productos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\models\\empleados.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:models\\empleados.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\models\\venta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:models\\venta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\repositories\\clienterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:repositories\\clienterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\controllers\\empleadocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:controllers\\empleadocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\controllers\\clientecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:controllers\\clientecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\automapperconfig\\automapperconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:automapperconfig\\automapperconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|c:\\users\\danie\\desktop\\programacion\\crud_ventas\\api\\ventas\\abstractions\\personarecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1653B195-3B67-4A88-B3D7-899FA359F6E9}|Ventas.csproj|solutionrelative:abstractions\\personarecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -50,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 15,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -79,133 +38,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Venta.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Models\\Venta.cs",
-              "RelativeDocumentMoniker": "Models\\Venta.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Models\\Venta.cs",
-              "RelativeToolTip": "Models\\Venta.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAcwA0AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T22:14:29.769Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Productos.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Models\\Productos.cs",
-              "RelativeDocumentMoniker": "Models\\Productos.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Models\\Productos.cs",
-              "RelativeToolTip": "Models\\Productos.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T22:14:24.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "EmpleadoController.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Controllers\\EmpleadoController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EmpleadoController.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Controllers\\EmpleadoController.cs",
-              "RelativeToolTip": "Controllers\\EmpleadoController.cs",
-              "ViewState": "AgIAAI8AAAAAAAAAAAAAAJ8AAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T00:02:44.786Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PersonaRecord.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Abstractions\\PersonaRecord.cs",
-              "RelativeDocumentMoniker": "Abstractions\\PersonaRecord.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Abstractions\\PersonaRecord.cs",
-              "RelativeToolTip": "Abstractions\\PersonaRecord.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T20:02:40.624Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Empleados.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Models\\Empleados.cs",
-              "RelativeDocumentMoniker": "Models\\Empleados.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Models\\Empleados.cs",
-              "RelativeToolTip": "Models\\Empleados.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T00:02:33.343Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AutoMapperConfig.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\AutoMapperConfig\\AutoMapperConfig.cs",
-              "RelativeDocumentMoniker": "AutoMapperConfig\\AutoMapperConfig.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\AutoMapperConfig\\AutoMapperConfig.cs",
-              "RelativeToolTip": "AutoMapperConfig\\AutoMapperConfig.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAABkAAABSAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T20:01:34.902Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ClienteRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Repositories\\ClienteRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\ClienteRepository.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Repositories\\ClienteRepository.cs",
-              "RelativeToolTip": "Repositories\\ClienteRepository.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAAADUAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T20:33:18.783Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EmpleadoRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Repositories\\EmpleadoRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\EmpleadoRepository.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Repositories\\EmpleadoRepository.cs",
-              "RelativeToolTip": "Repositories\\EmpleadoRepository.cs",
-              "ViewState": "AgIAAJwAAAAAAAAAAAAAAKsAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T00:11:40.424Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EmpleadosDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\DTOs\\EmpleadosDTO.cs",
-              "RelativeDocumentMoniker": "DTOs\\EmpleadosDTO.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\DTOs\\EmpleadosDTO.cs",
-              "RelativeToolTip": "DTOs\\EmpleadosDTO.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAUwAsAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T20:01:24.865Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ClienteController.cs",
-              "DocumentMoniker": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Controllers\\ClienteController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ClienteController.cs",
-              "ToolTip": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Controllers\\ClienteController.cs",
-              "RelativeToolTip": "Controllers\\ClienteController.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAAAJMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T02:28:48.838Z"
             }
           ]
         }
