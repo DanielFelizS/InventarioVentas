@@ -871,3 +871,4 @@ C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\refi
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Ventas.pdb
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Ventas.genruntimeconfig.cache
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\ref\Ventas.dll
+C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

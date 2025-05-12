@@ -30,6 +30,8 @@ builder.Services.AddScoped<IVentasRepository, VentasRepository>();
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(AutoMapperConfigProfile));
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {

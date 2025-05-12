@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Ventas.Interfaces;
 using Ventas.Models;
 using Ventas.DTOs;
+using Ventas.Abstractions;
 using Ventas.Data;
 using AutoMapper;
 using OfficeOpenXml;
@@ -49,10 +50,8 @@ namespace Ventas.Repositories
                 PageSize = pageSize,
                 TotalPages = totalPages
             };
-
-
-            
-            return paginatedList;
+          
+           return paginatedList;
         }
         // Cliente por Id
         public async Task<ActionResult<ClientesDTO>> ClientePorId(int id)
@@ -63,12 +62,15 @@ namespace Ventas.Repositories
             // Mapear el cliente a un DTO que incluya el nombre del departamento
             var clientesDTO = new ClientesDTO
             {
-                Id = cliente.Id,
-                Nombre = cliente.Nombre,
-                Apellido = cliente.Apellido,
-                Telefono = cliente.Telefono,
-                Email = cliente.Email,
-                DNI = cliente.DNI
+                Cliente = new PersonaRecord
+                (
+                    cliente.Id,
+                    cliente.Nombre,
+                    cliente.Apellido,
+                    cliente.Telefono,
+                    cliente.Email,
+                    cliente.DNI
+                )
             };
 
             return clientesDTO;
@@ -79,17 +81,21 @@ namespace Ventas.Repositories
             IQueryable<ClientesDTO> consulta = _context.clientes
                 .Select(cliente => new ClientesDTO
                 {
-                    Id = cliente.Id,
-                    Nombre = cliente.Nombre,
-                    Apellido = cliente.Apellido,
-                    Telefono = cliente.Telefono,
-                    Email = cliente.Email,
-                    DNI = cliente.DNI
+                    Cliente = new PersonaRecord
+                    (
+                       cliente.Id,
+                       cliente.Nombre,
+                       cliente.Apellido,
+                       cliente.Telefono,
+                       cliente.Email,
+                       cliente.DNI
+                    )
                 });
 
             var clientes = await consulta.ToListAsync();
             var totalCount = await _context.clientes.CountAsync();
 
+            var clientesDTO = _mapper.Map<List<ClientesDTO>>(clientes);
             return new ActionResult<IEnumerable<ClientesDTO>>(clientes);
         }
         // Buscar cliente
@@ -132,7 +138,7 @@ namespace Ventas.Repositories
         public async Task<IActionResult> AgregarCliente([FromBody] ClientesDTO cliente)
         {
             Clientes AddCliente = _mapper.Map<Clientes>(cliente);
-            _context.clientes.AddAsync(AddCliente);
+            _context.clientes.Add(AddCliente);
             await _context.SaveChangesAsync();
             return new OkResult();
         }

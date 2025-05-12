@@ -149,17 +149,17 @@ namespace Ventas.Controllers
                 await _empleadoRepository.saveInformation(empleado);
 
                 // Devolver una respuesta CreatedAtRoute con el empleado creado
-                return CreatedAtRoute("ObtenerEmpleados", new { id = empleado.Id }, empleado);
+                return CreatedAtRoute("ObtenerEmpleados", new { id = empleado.Empleado.Id }, empleado);
             }
 
             return BadRequest(ModelState);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] EmpleadosDTO empleado)
+        public async Task<IActionResult> EditarEmpleado(int id, [FromBody] EmpleadosDTO empleado)
         {
             _empleadoRepository.Put(id, empleado);
 
-            if (id != empleado?.Id)
+            if (id != empleado.Empleado.Id)
             {
                 return BadRequest("No se encontró el ID");
             }

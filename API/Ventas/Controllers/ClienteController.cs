@@ -46,6 +46,7 @@ namespace Ventas.Controllers
                 return NotFound();
             }
         }
+
         [HttpGet("{id}", Name = "ClientePorId")]
         public async Task<ActionResult<ClientesDTO>> ClientePorId(int id)
         {
@@ -138,7 +139,7 @@ namespace Ventas.Controllers
             {
                 await _clienteRepository.AgregarCliente(cliente);
 
-                return CreatedAtRoute("VerClientes", new { id = cliente.Id }, cliente);
+                return CreatedAtRoute("VerClientes", new { id = cliente.Cliente.Id }, cliente);
             }
 
             return BadRequest(ModelState);
@@ -148,7 +149,7 @@ namespace Ventas.Controllers
         {
             _clienteRepository.EditarCliente(id, cliente);
 
-            if (id != cliente?.Id)
+            if (id != cliente?.Cliente.Id)
             {
                 return BadRequest("No se encontró el ID");
             }

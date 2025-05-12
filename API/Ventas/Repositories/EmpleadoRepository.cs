@@ -11,6 +11,9 @@ using Ventas.Data;
 using AutoMapper;
 using OfficeOpenXml;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Ventas.Abstractions;
 
 namespace Ventas.Repositories
 {
@@ -78,18 +81,22 @@ namespace Ventas.Repositories
         // Mapear el empleado a un DTO que incluya el nombre del departamento
         var EmpleadosDTO = new EmpleadosDTO
         {
-            Id = empleado.Id,
-            Nombre = empleado.Nombre,
-            Apellido = empleado.Apellido,
             Sexo = empleado.Sexo,
             Edad = empleado.Edad,
-            Telefono = empleado.Telefono,
-            Email = empleado.Email,
-            DNI = empleado.DNI,
             Sueldo = empleado.Sueldo,
             Cargo = empleado.Cargo,
             FechaNacimiento = empleado.FechaNacimiento,
-            FechaContratacion = empleado.FechaContratacion
+            FechaContratacion = empleado.FechaContratacion,
+
+            Empleado = new PersonaRecord
+            (
+                empleado.Id,
+                empleado.Nombre,
+                empleado.Apellido,
+                empleado.Telefono,
+                empleado.Email,
+                empleado.DNI
+            )   
         };
 
         return EmpleadosDTO;
@@ -100,18 +107,22 @@ namespace Ventas.Repositories
         IQueryable<EmpleadosDTO> consulta = _context.empleados
             .Select(empleado => new EmpleadosDTO
             {
-                Id = empleado.Id,
-                Nombre = empleado.Nombre,
-                Apellido = empleado.Apellido,
                 Sexo = empleado.Sexo,
                 Edad = empleado.Edad,
-                Telefono = empleado.Telefono,
-                Email = empleado.Email,
-                DNI = empleado.DNI,
                 Sueldo = empleado.Sueldo,
                 Cargo = empleado.Cargo,
                 FechaNacimiento = empleado.FechaNacimiento,
-                FechaContratacion = empleado.FechaContratacion
+                FechaContratacion = empleado.FechaContratacion,
+
+                Empleado = new PersonaRecord
+                (
+                    empleado.Id,
+                    empleado.Nombre,
+                    empleado.Apellido,
+                    empleado.Telefono,
+                    empleado.Email,
+                    empleado.DNI
+                )
             });
         var empleados = await consulta.ToListAsync();
         var totalCount = await _context.empleados.CountAsync();
