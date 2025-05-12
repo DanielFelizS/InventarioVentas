@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "+FeLMySWBS3IXsqQm0qtNlXIs51OYInCR67XUDDrPxI=",
+  "Hash": "g2RV9xBxRea+skOq/Wf4I4iTryetq2nX/bQ1wedlcso=",
   "Source": "Ventas",
   "BasePath": "_content/Ventas",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

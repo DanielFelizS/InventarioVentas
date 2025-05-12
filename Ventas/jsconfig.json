@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["src/*"],
+        "@/pages/*": ["src/components/pages/*"],
+        "@/CrudPages/*": ["src/components/pages/CrudPages/*"],
+        "@/components/*": ["src/components/*"],
+        "@/hooks/*": ["src/components/hooks/*"],
+        "@/templates/*": ["src/components/templates/*"],
+        "@/reducers/*": ["src/reducers/*"],
+        "@/actions/*": ["src/actions/*"],
+        "@/root/*": ["./*"]
+      },
+      "allowJs": true,
+    }
+  }
+  
