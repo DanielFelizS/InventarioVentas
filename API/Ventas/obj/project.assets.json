@@ -14054,8 +14054,12 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\Danie\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+=======
+    "C:\\Users\\Danie\\.nuget\\packages\\": {}
+>>>>>>> 3fc89471933eaa8b8daa8c962a966083d83a3763
   },
   "project": {
     "version": "1.0.0",
@@ -14071,7 +14075,10 @@
       ],
       "configFilePaths": [
         "C:\\Users\\Danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+<<<<<<< HEAD
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+=======
+>>>>>>> 3fc89471933eaa8b8daa8c962a966083d83a3763
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -14097,8 +14104,12 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
+<<<<<<< HEAD
       },
       "SdkAnalysisLevel": "9.0.100"
+=======
+      }
+>>>>>>> 3fc89471933eaa8b8daa8c962a966083d83a3763
     },
     "frameworks": {
       "net8.0": {
@@ -14216,7 +14227,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+>>>>>>> 3fc89471933eaa8b8daa8c962a966083d83a3763
       }
     }
   }

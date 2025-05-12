@@ -1,5 +1,5 @@
 import { saveAs } from "file-saver";
-import { api, useState } from "./dependencies";
+import { api, useState } from "@hooks/dependencies";
 
 export default function useExport( {url, search, fileName} ) {
     const [msg, setMsg] = useState()

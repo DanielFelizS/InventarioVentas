@@ -11,7 +11,7 @@ import {
     productosReducer,
     ventasReducer,
     VentasTypes
-  } from "./dependencies";
+  } from "@hooks/dependencies";
   
   export default function useGetById({ url, id }) {
     const [stateEmpleado, dispatchEmpleado] = useReducer(empleadosReducer, INITIAL_STATE);

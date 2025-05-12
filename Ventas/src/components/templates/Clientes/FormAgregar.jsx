@@ -1,5 +1,5 @@
-import { ClientesDatos } from "../../../reducers/clientesReducer";
-import { clientesReducer } from "../../hooks/dependencies";
+import { ClientesDatos } from "@reducers/clientesReducer";
+import { clientesReducer } from "@hooks/dependencies";
 import {
   FormInput,
   BtnAction,
@@ -8,7 +8,7 @@ import {
   usePost,
   useReducer,
   ProductosTypes
-} from "../Dependencies";
+} from "@templates/Dependencies";
 
 export default function FormAgregar() {
   const [state, dispatch] = useReducer(clientesReducer, ClientesDatos)

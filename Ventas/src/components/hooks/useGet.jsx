@@ -10,7 +10,7 @@ import {
   ClientesTypes,
   ProductosTypes,
   api
-} from "./dependencies";
+} from "@hooks/dependencies";
 
 export default function useGet({ url }) {
   const [stateEmpleado, dispatchEmpleado] = useReducer(empleadosReducer, INITIAL_STATE);

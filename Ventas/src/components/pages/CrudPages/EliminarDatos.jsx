@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import BtnAction from '../../atoms/Button/Button'
+import BtnAction from '@components/atoms/Button/Button'
 import Modal from "react-bootstrap/Modal";
-import useDelete from "../../hooks/useDelete";
+import useDelete from "@hooks/useDelete";
 
 export default function EliminarDatos({ urlDato, ruta, Entidad }) {
   const { eliminarDatos, NavigateHome } = useDelete({ url: urlDato, urlRuta: ruta });

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import api from '../../../config.js'
-import Pagination from "../molecules/pagination/Paginacion";
-import Search from "../molecules/Search/Search";
-import TableHead from "../atoms/Table/TableHead";
-// import DataSpinner from "../atoms/others/Spinner.js";
+import Pagination from "@components/molecules/pagination/Paginacion";
+import Search from "@components/molecules/Search/Search";
+import TableHead from "@components/atoms/Table/TableHead";
+// import DataSpinner from "@components/atoms/others/Spinner.js";
 
 export const Table = ({ APIPath, APINames, EditarDatos, EliminarDatos, searchData, Header }) => {
 

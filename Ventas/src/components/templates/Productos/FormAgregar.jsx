@@ -3,7 +3,7 @@ import {
   BtnAction, InputGroup, Form,
   useState, usePost, productosReducer,
   useReducer, ProductosData, ProductosTypes
-} from "../Dependencies";
+} from "@templates/Dependencies";
 
 export default function FormAgregar() {
 

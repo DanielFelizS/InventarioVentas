@@ -16,7 +16,7 @@ import {
   EliminarCliente,
   EliminarEmpleado,
   EliminarVenta,
-} from "./components/pages/Dependencies";
+} from "@pages/Dependencies";
 import { useEffect } from "react";
 import {
   Routes,
@@ -24,7 +24,7 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-import Navigation from "./components/molecules/Navbar/Navbar";
+import Navigation from "@components/molecules/Navbar/Navbar";
 import "./App.css";
 
 export default function App() {

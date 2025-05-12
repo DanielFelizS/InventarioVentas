@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import useGetById from "../../hooks/useGetById";
+import useGetById from "@hooks/useGetById";
 import {
   FormInput,
   BtnAction,

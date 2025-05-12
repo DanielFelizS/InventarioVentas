@@ -1,4 +1,4 @@
-import { VentasTypes } from '../actions/Ventas'
+import { VentasTypes } from '@/actions/Ventas'
 
 export const INITIAL_STATE = {
     venta: []

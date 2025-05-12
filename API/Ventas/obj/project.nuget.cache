@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "8POzm4G+F+s=",
+=======
+  "dgSpecHash": "9qtCl8MquEg=",
+>>>>>>> 3fc89471933eaa8b8daa8c962a966083d83a3763
   "success": true,
   "projectFilePath": "C:\\Users\\Danie\\Desktop\\PROGRAMACION\\CRUD_Ventas\\API\\Ventas\\Ventas.csproj",
   "expectedPackageFiles": [

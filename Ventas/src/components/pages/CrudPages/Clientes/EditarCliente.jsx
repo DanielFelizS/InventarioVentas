@@ -1,4 +1,4 @@
-import FormEditar from "../../../templates/Clientes/FormEditar"
+import FormEditar from "@templates/Clientes/FormEditar"
 
 export default function EditarCliente() {
   return (

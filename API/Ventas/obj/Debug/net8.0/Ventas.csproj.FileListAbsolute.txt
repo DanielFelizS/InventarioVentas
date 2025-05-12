@@ -580,7 +580,10 @@ C:\Users\A19A05048\Desktop\PROGRAMACION\Proyectos\CRUD_Ventas\API\Ventas\obj\Deb
 C:\Users\A19A05048\Desktop\PROGRAMACION\Proyectos\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\ref\Ventas.dll
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\bin\Debug\net8.0\appsettings.json
+<<<<<<< HEAD
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\bin\Debug\net8.0\Ventas.staticwebassets.endpoints.json
+=======
+>>>>>>> 3fc89471933eaa8b8daa8c962a966083d83a3763
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\bin\Debug\net8.0\Ventas.exe
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\bin\Debug\net8.0\Ventas.deps.json
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\bin\Debug\net8.0\Ventas.runtimeconfig.json
@@ -855,20 +858,33 @@ C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Vent
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Ventas.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Ventas.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Ventas.sourcelink.json
+<<<<<<< HEAD
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\scopedcss\bundle\Ventas.styles.css
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets\msbuild.Ventas.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets\msbuild.Ventas.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+=======
+C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets\msbuild.Ventas.Microsoft.AspNetCore.StaticWebAssets.props
+>>>>>>> 3fc89471933eaa8b8daa8c962a966083d83a3763
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets\msbuild.build.Ventas.props
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Ventas.props
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Ventas.props
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets.pack.json
+<<<<<<< HEAD
+=======
+C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\scopedcss\bundle\Ventas.styles.css
+>>>>>>> 3fc89471933eaa8b8daa8c962a966083d83a3763
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Ventas.csproj.Up2Date
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Ventas.dll
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\refint\Ventas.dll
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Ventas.pdb
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\Ventas.genruntimeconfig.cache
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\ref\Ventas.dll
+<<<<<<< HEAD
 C:\Users\Danie\Desktop\PROGRAMACION\CRUD_Ventas\API\Ventas\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+=======
+>>>>>>> 3fc89471933eaa8b8daa8c962a966083d83a3763
